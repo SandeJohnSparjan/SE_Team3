@@ -42,7 +42,7 @@ $get_frnd_num = $friend_obj->get_all_friends($_SESSION['user_id'], false);
             <h1><?php echo $user_data->username;?></h1>
         </div>
 
-        <p>Hi</p>
+
         <nav>
             <ul>
                 <li><a href="profile.php" rel="noopener noreferrer" class="active">Home</a></li>
