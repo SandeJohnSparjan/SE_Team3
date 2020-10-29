@@ -95,11 +95,11 @@ $get_frnd_num = $friend_obj->get_all_friends($_SESSION['user_id'], false);
                 <div class="row">
                     <div class="col-md-6">
                         <div class="form-group">
-                            <input type="text"  name= "get_email" class="form-control" placeholder="Enter Id" required>
+                            <input type="text"  name= "get_email" class="form-control" placeholder="Enter email ID" required>
                         </div>
                     </div>
                     <div class="col-md-6">
-                        <button type="submit" name="fetch_btn" class="btn btn-primary">Fetch By ID</button>
+                        <button type="submit" name="fetch_btn" class="btn btn-primary">Search</button>
                     </div>
                 </div>
             </form>
