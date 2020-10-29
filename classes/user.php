@@ -5,7 +5,7 @@ class User{
     protected $user_name;
     protected $user_email;
     protected $user_pass;
-    protected $has_pass;
+    protected $hash_pass;
 
     function __construct($db_connection)
     {
@@ -109,7 +109,7 @@ class User{
     //Fetch all users
     function all_users($id){
         try{
-            $get_users = $this->db->prepare("SELECT id,username,user_image FROM users WHERE id != ?");
+            $get_users = $this->db->prepare("SELECT id,username,user_email,user_image FROM users WHERE id != ?");
             $get_users->execute([$id]);
             if($get_users->rowCount() >0){
                 return $get_users->fetchAll(PDO::FETCH_OBJ);
