@@ -25,7 +25,7 @@ if(isset($_SESSION['email'])){
 <body>
 <div class="main_container login_signup_container">
     <h1>Sign Up</h1>
-    <form action="" method="POST" novalidate>
+    <form action="signup_email.php" method="POST" novalidate>
         <label for="username">Full Name</label>
         <input type="text" id="username" name="username" spellcheck="false" placeholder="Enter your full name" required>
         <label for="email">Email</label>
