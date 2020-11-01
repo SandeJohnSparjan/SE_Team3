@@ -122,4 +122,18 @@ class User{
             die($errMsg->getMessage());
         }
     }
+
+//    //upload image
+//    function upload_image($id){
+//        try{
+//            $upload = $this->db->prepare("UPDATE users SET user_image = '" . $_FILES['file']['name'] . "' WHERE id = '" . $_SESSION['user_id'] . "'");
+//            $upload->execute([$id]);
+//            if($upload){
+//                echo "<h4>Uploaded successfully";
+//            }
+//        }
+//        catch (PDOException $errMsg){
+//            die($errMsg->getMessage());
+//        }
+//    }
 }

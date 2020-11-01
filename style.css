@@ -128,6 +128,14 @@ h1{
     margin:0 3px;
 }
 
+.profile_container nav ul button{
+    color: #FFF;
+    font-size: 14px;
+    display: block;
+    padding:5px 10px;
+    margin:0 3px;
+}
+
 .profile_container nav ul button:hover{
     background-color: #F3EBFF;
     color: #000000;

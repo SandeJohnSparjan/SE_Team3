@@ -23,6 +23,8 @@ if(isset($_POST['fetch_btn'])) {
 $get_req_num = $friend_obj->req_notification($_SESSION['user_id'], false);
 //total friends
 $get_frnd_num = $friend_obj->get_all_friends($_SESSION['user_id'], false);
+
+
 ?>
 
 <!DOCTYPE html>
@@ -64,6 +66,7 @@ $get_frnd_num = $friend_obj->get_all_friends($_SESSION['user_id'], false);
                         }
                         ?>"><?php echo $get_req_num;?></span></a>
                     <a class="dropdown-item" href="friends.php" rel="noopener noreferrer">Friends<span class="badge"><?php echo $get_frnd_num;?></span></a>
+                    <a class="dropdown-item" href="image_upload.php" rel="noopener noreferrer">Change Pic</a>
                     <a class="dropdown-item" href="logout.php" rel="noopener noreferrer">Logout</a>
                 </div>
             </ul>
