@@ -87,7 +87,7 @@ if (isset($_POST['submit'])) {
 
 </div>
 
-<h1>Hiii</h1>
+
 </body>
 </html>
 
