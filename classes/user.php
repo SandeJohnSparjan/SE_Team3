@@ -40,7 +40,9 @@ class User{
                         $register_stmt->bindValue(':user_image', $user_image . '.png', PDO::PARAM_STR);
 
                         $register_stmt->execute();
-                        return ['successMessage' => 'You have signed up successfully.'];
+
+
+                        return ['successMessage' => 'You have signed up successfully. Please Login'];
                     }
                 } else {
                     return ['errorMessage' => 'Invalid email address!'];

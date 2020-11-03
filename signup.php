@@ -4,6 +4,8 @@ require 'includes/init.php';
 //if user is making a sign up request
 if(isset($_POST['username']) && isset($_POST['email']) && isset($_POST['password'])){
     $result = $user_obj->signUp($_POST['username'], $_POST['email'],$_POST['password']);
+
+    $email_result = $email_obj->sendRegistrationEmail($_POST['username'], $_POST['email']);
 }
 
 //user logged in already
@@ -25,14 +27,16 @@ if(isset($_SESSION['email'])){
 <body>
 <div class="main_container login_signup_container">
     <h1>Sign Up</h1>
-    <form action="signup_email.php" method="POST" novalidate>
+    <form action="" method="POST" novalidate>
         <label for="username">Full Name</label>
         <input type="text" id="username" name="username" spellcheck="false" placeholder="Enter your full name" required>
         <label for="email">Email</label>
-        <input type="email" id="email" name="email" spellcheck="false" placeholder="Enter your email address" required>
+        <input type="email" id="email" name="email" spellcheck=
+
+        "false" placeholder="Enter your email address" required>
         <label for="password">Password</label>
         <input type="password" id="password" name="password" placeholder="Enter your password" required>
-        <input type="submit" value="Sign Up">
+        <input type="submit" name="sendMail" value="Sign Up">
         <a href="index.php" class="form_link">Login</a>
     </form>
     <div>
