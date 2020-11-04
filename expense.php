@@ -48,6 +48,7 @@ $get_frnd_num = $friend_obj->get_all_friends($_SESSION['user_id'], false);
             </div>
             <h1><?php echo $user_data->username;?></h1>
         </div>
+		<link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
 
 
         <nav>
@@ -74,77 +75,53 @@ $get_frnd_num = $friend_obj->get_all_friends($_SESSION['user_id'], false);
             </ul>
         </nav>
 
-        <div class="all_users">
-            <h3>All Users</h3>
-            <div class="usersWrapper">
-                <?php
-                if($all_users){
-                    foreach($all_users as $row){
-                        echo '<div class="user_box">
-                                <div class="user_img"><img src="profile_images/'.$row->user_image.'" alt="Profile Image"></div>
-                                <div class="user_info"><span>'.$row->username.'</span>
-                                <span><a href="user_profile.php?id='.$row->id.'" class="see_profileBtn">See Profile</a></span></div>
-                                </div>';
-                    }
-                }
-                else{
-                    echo '<h4>There is no User!</h4>';
-                }
-                ?>
-            </div>
-        </div>
+        <div class="add">
+<center ><b>&nbsp &nbsp ADD AN EXPENSE</b></center>
+<br></br>
+<div class="container-fluid" style="border:1px solid #cecece;">
+<br>
+<form action="expense_added.php" method="post">
+<b>Description</b> &nbsp 
+<input type="text" name="description" required /> <br><br><br>
+<b>Paid by:&nbsp&nbsp&nbsp&nbsp&nbsp
+<?php $mysqli = new mysqli("localhost", "root", "", "easyroommate"); 
 
-        <hr>
-        <div class="card-body">
-            <form action="" method="POST">
-                <div class="row">
-                    <div class="col-md-6">
-                        <div class="form-group">
-                            <input type="text"  name= "get_email" class="form-control" placeholder="Enter email ID" required>
-                        </div>
-                    </div>
-                    <div class="col-md-6">
-                        <button type="submit" name="fetch_btn" class="btn btn-primary">Search</button>
-                    </div>
-                </div>
-            </form>
-        </div>
+if ($mysqli ==false) { 
+	die("ERROR: Could not connect. ".$mysqli->connect_error); 
+} 
+$result=mysqli_query($mysqli,"select * from users");
+echo"<select name='paid_by' id='paid_by'>";
+echo "<option> Select Person Who Paid the expense</option>";
+while($row=mysqli_fetch_array($result))
+{
+	echo "<option id='user1'>$row[username]</option>";
+}
+echo"</select> <br></br>";
 
-        <div class="all_users">
-            <h3>Search results</h3>
-            <div class="usersWrapper">
-                <?php
+echo "Share With:&nbsp";
+$result=mysqli_query($mysqli,"select * from users");
+echo"<select name='share_with' id='share_with'>";
 
-                if($all_users){
-                    $flag = 0;
-                    foreach($all_users as $row){
-
-                        if($row->user_email === $s_id && $s_id !== ''){
-                            $flag =1;
-                            echo '<div class="user_box">
-                                <div class="user_img"><img src="profile_images/'.$row->user_image.'" alt="Profile Image"></div>
-                                <div class="user_info"><span>'.$row->username.'</span>
-                                <span><a href="user_profile.php?id='.$row->id.'" class="see_profileBtn">See Profile</a></span></div>
-                                </div>';
-                        }
+echo "<option> -- Select Person Whom you want to share the expense with--</option>";
+while($row=mysqli_fetch_array($result))
+{
+	echo "<option id='user2'>$row[username]</option>";
+}
+echo"</select>";
 
 
+?> </b>
+<br></br>
 
-
-                    }
-                    if($flag=== 0 && $s_id !== ''){
-                        echo '<h4>User not registered</h4>';
-                    }
-                }
-
-                else{
-                    echo '<h4>There is no User!</h4>';
-                }
-                ?>
-            </div>
-        </div>
-
+<b>Amount:</b> &nbsp&nbsp&nbsp &nbsp&nbsp<input type="text" name="amount"required /> <br><br>
+<center>
+<input type="submit" name="expense_button" value="Submit" /><br></br>
+</center>
+</form>
+</div>
     </div>
+	</div>
+	</div>
 </body>
 </html>
 
