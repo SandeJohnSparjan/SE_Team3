@@ -88,23 +88,28 @@ $get_frnd_num = $friend_obj->get_all_friends($_SESSION['user_id'], false);
                 if($all_users){
 					
                     foreach($all_users as $row){
-						echo '<div class="user_box">';
-						echo $row->username;
+
+
+//						echo $user_data->username;
+                        $user_1 = $user_data->username;
 						$user2=$row->username;
-						$ex1 = mysqli_query($mysqli, "SELECT SUM(amount1) as sum1 FROM expense WHERE user1='shravani' AND user2='$user2'"); 
+						$ex1 = mysqli_query($mysqli, "SELECT SUM(amount1) as sum1 FROM expense WHERE user1='$user_1' AND user2='$user2'");
 						$row1 = @mysqli_fetch_assoc($ex1); 
 						$sum1 = $row1['sum1'];
-						$ex2 = mysqli_query($mysqli, "SELECT SUM(amount2) as sum2 FROM expense WHERE user1='$user2' AND user2='shravani'"); 
+						$ex2 = mysqli_query($mysqli, "SELECT SUM(amount2) as sum2 FROM expense WHERE user1='$user2' AND user2='$user_1'");
 						$row2 = @mysqli_fetch_assoc($ex2); 
 						$sum2 = $row2['sum2'];
 						$total_balance=$sum1-$sum2;
 						if ($total_balance!=0)
 						{
-							echo " &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp Balance: ".$total_balance."<br>";
+                            echo '<div class="user_box">';
+                            echo '<div class="user_info">'.$row->username.'<span>Balance: '.$total_balance.'</span></div>';
+//						    echo "Balance: ".$total_balance."<br>";
 						}
-						else{
-							echo " &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp You are settled up";
-						}
+//						else{
+//                            echo $row->username;
+//							echo " &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp You are settled up";
+//						}
 								echo '</div><br></br>';
 								
                     }
