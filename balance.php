@@ -48,6 +48,7 @@ $get_frnd_num = $friend_obj->get_all_friends($_SESSION['user_id'], false);
             </div>
             <h1><?php echo $user_data->username;?></h1>
         </div>
+		<link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
 
 
         <nav>
@@ -75,16 +76,37 @@ $get_frnd_num = $friend_obj->get_all_friends($_SESSION['user_id'], false);
         </nav>
 
         <div class="all_users">
-            <h3>All Users</h3>
+            <h3>BALANCES</h3>
+			<?php $mysqli = new mysqli("localhost", "root", "", "easyroommate"); 
+					if ($mysqli ==false) 
+					{ 
+						die("ERROR: Could not connect. ".$mysqli->connect_error); 
+					}
+			?> 
             <div class="usersWrapper">
                 <?php
                 if($all_users){
+					
                     foreach($all_users as $row){
-                        echo '<div class="user_box">
-                                <div class="user_img"><img src="profile_images/'.$row->user_image.'" alt="Profile Image"></div>
-                                <div class="user_info"><span>'.$row->username.'</span>
-                                <span><a href="user_profile.php?id='.$row->id.'" class="see_profileBtn">See Profile</a></span></div>
-                                </div>';
+						echo '<div class="user_box">';
+						echo $row->username;
+						$user2=$row->username;
+						$ex1 = mysqli_query($mysqli, "SELECT SUM(amount1) as sum1 FROM expense WHERE user1='shravani' AND user2='$user2'"); 
+						$row1 = @mysqli_fetch_assoc($ex1); 
+						$sum1 = $row1['sum1'];
+						$ex2 = mysqli_query($mysqli, "SELECT SUM(amount2) as sum2 FROM expense WHERE user1='$user2' AND user2='shravani'"); 
+						$row2 = @mysqli_fetch_assoc($ex2); 
+						$sum2 = $row2['sum2'];
+						$total_balance=$sum1-$sum2;
+						if ($total_balance!=0)
+						{
+							echo " &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp Balance: ".$total_balance."<br>";
+						}
+						else{
+							echo " &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp You are settled up";
+						}
+								echo '</div><br></br>';
+								
                     }
                 }
                 else{
@@ -93,58 +115,8 @@ $get_frnd_num = $friend_obj->get_all_friends($_SESSION['user_id'], false);
                 ?>
             </div>
         </div>
-
-        <hr>
-        <div class="card-body">
-            <form action="" method="POST">
-                <div class="row">
-                    <div class="col-md-6">
-                        <div class="form-group">
-                            <input type="text"  name= "get_email" class="form-control" placeholder="Enter email ID" required>
-                        </div>
-                    </div>
-                    <div class="col-md-6">
-                        <button type="submit" name="fetch_btn" class="btn btn-primary">Search</button>
-                    </div>
-                </div>
-            </form>
-        </div>
-
-        <div class="all_users">
-            <h3>Search results</h3>
-            <div class="usersWrapper">
-                <?php
-
-                if($all_users){
-                    $flag = 0;
-                    foreach($all_users as $row){
-
-                        if($row->user_email === $s_id && $s_id !== ''){
-                            $flag =1;
-                            echo '<div class="user_box">
-                                <div class="user_img"><img src="profile_images/'.$row->user_image.'" alt="Profile Image"></div>
-                                <div class="user_info"><span>'.$row->username.'</span>
-                                <span><a href="user_profile.php?id='.$row->id.'" class="see_profileBtn">See Profile</a></span></div>
-                                </div>';
-                        }
-
-
-
-
-                    }
-                    if($flag=== 0 && $s_id !== ''){
-                        echo '<h4>User not registered</h4>';
-                    }
-                }
-
-                else{
-                    echo '<h4>There is no User!</h4>';
-                }
-                ?>
-            </div>
-        </div>
-
     </div>
+	</div>
 </body>
 </html>
 

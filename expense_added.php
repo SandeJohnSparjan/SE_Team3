@@ -55,8 +55,6 @@ $get_frnd_num = $friend_obj->get_all_friends($_SESSION['user_id'], false);
                 <li><a href="profile.php" rel="noopener noreferrer" class="active">Home</a></li>
 
                 <li><a href="expense.php" rel="noopener noreferrer">Add an Expense</a></li>
-								<li><a href="balance.php" rel="noopener noreferrer">Balance</a></li>
-
 
                 <button class="btn dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                     Edit
@@ -74,77 +72,49 @@ $get_frnd_num = $friend_obj->get_all_friends($_SESSION['user_id'], false);
             </ul>
         </nav>
 
-        <div class="all_users">
-            <h3>All Users</h3>
-            <div class="usersWrapper">
-                <?php
-                if($all_users){
-                    foreach($all_users as $row){
-                        echo '<div class="user_box">
-                                <div class="user_img"><img src="profile_images/'.$row->user_image.'" alt="Profile Image"></div>
-                                <div class="user_info"><span>'.$row->username.'</span>
-                                <span><a href="user_profile.php?id='.$row->id.'" class="see_profileBtn">See Profile</a></span></div>
-                                </div>';
-                    }
-                }
-                else{
-                    echo '<h4>There is no User!</h4>';
-                }
-                ?>
-            </div>
-        </div>
+<?php 
+$exp_name=$_POST['description'];
+$amount=$_POST['amount'];
+$paid_by = $_POST['paid_by'];
+    if (isset($_POST['paid_by'])) {
+    $user1 = $_POST['paid_by'];
+}
+if (isset($_POST['share_with'])) {
+    $user2 = $_POST['share_with'];
+}
+$amount1=$amount/2;
+$amount2=$amount/2;
+$mysqli = new mysqli("localhost", "root", "", "easyroommate"); 
+if ($mysqli ==false) { 
+	die("ERROR: Could not connect. ".$mysqli->connect_error); 
+} 
+	$reg=" insert into expense(exp_name,amount1,amount2,user1,user2,total_amount,paid_by) values ('$exp_name','$amount1','$amount1','$user1','$user2','$amount','$paid_by')";//inserting expense details into database
+	$query=mysqli_query($mysqli,$reg);
+	// $ex1="SELECT SUM(amount1) as sum FROM expense WHERE user1='shravani'";
+	$ex1 = mysqli_query($mysqli, "SELECT SUM(amount1) as sum1 FROM expense WHERE user1='$user1'"); 
+	$row = mysqli_fetch_assoc($ex1); 
+	$sum1 = $row['sum1'];
+	echo "<script> alert('Expense succesfully added'); </script>"
 
-        <hr>
-        <div class="card-body">
-            <form action="" method="POST">
-                <div class="row">
-                    <div class="col-md-6">
-                        <div class="form-group">
-                            <input type="text"  name= "get_email" class="form-control" placeholder="Enter email ID" required>
-                        </div>
-                    </div>
-                    <div class="col-md-6">
-                        <button type="submit" name="fetch_btn" class="btn btn-primary">Search</button>
-                    </div>
-                </div>
-            </form>
-        </div>
+	/*echo $user1."<br>";
+     echo "owes you: ".$sum1."<br>"; 
+	$ex2 = mysqli_query($mysqli, "SELECT SUM(amount2) as sum2 FROM expense WHERE user2='$user1'"); 
+	$row = mysqli_fetch_assoc($ex2); 
+	$sum2 = $row['sum2'];
+     echo "you owe: ".$sum2."<br>";	 
+	$total_balance=$sum1-$sum2;
+	if($total_balance>=0)
+	{
+		echo "Total Balance: ".$total_balance."<br>";
+	}
+	else
+		echo "Total Balance:".$total_balance."<br>";
+	?> 
 
-        <div class="all_users">
-            <h3>Search results</h3>
-            <div class="usersWrapper">
-                <?php
+    </div>*/
+	?>
+	<script type="text/javascript">location.href = 'balance.php';</script>
 
-                if($all_users){
-                    $flag = 0;
-                    foreach($all_users as $row){
-
-                        if($row->user_email === $s_id && $s_id !== ''){
-                            $flag =1;
-                            echo '<div class="user_box">
-                                <div class="user_img"><img src="profile_images/'.$row->user_image.'" alt="Profile Image"></div>
-                                <div class="user_info"><span>'.$row->username.'</span>
-                                <span><a href="user_profile.php?id='.$row->id.'" class="see_profileBtn">See Profile</a></span></div>
-                                </div>';
-                        }
-
-
-
-
-                    }
-                    if($flag=== 0 && $s_id !== ''){
-                        echo '<h4>User not registered</h4>';
-                    }
-                }
-
-                else{
-                    echo '<h4>There is no User!</h4>';
-                }
-                ?>
-            </div>
-        </div>
-
-    </div>
 </body>
 </html>
 
