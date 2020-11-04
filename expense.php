@@ -2,6 +2,7 @@
 require 'includes/init.php';
 if(isset($_SESSION['user_id']) && isset($_SESSION['email'])){
     $user_data = $user_obj->find_user_by_id($_SESSION['user_id']);
+
     if($user_data===false){
         header('Location: logout.php');
     }
@@ -24,6 +25,8 @@ $get_req_num = $friend_obj->req_notification($_SESSION['user_id'], false);
 //total friends
 $get_frnd_num = $friend_obj->get_all_friends($_SESSION['user_id'], false);
 
+//get_all_friends
+$get_all_friends = $friend_obj->get_all_friends($_SESSION['user_id'], true);
 
 ?>
 
@@ -76,51 +79,48 @@ $get_frnd_num = $friend_obj->get_all_friends($_SESSION['user_id'], false);
         </nav>
 
         <div class="add">
-<center ><b>&nbsp &nbsp ADD AN EXPENSE</b></center>
-<br></br>
-<div class="container-fluid" style="border:1px solid #cecece;">
-<br>
-<form action="expense_added.php" method="post">
-<b>Description</b> &nbsp 
-<input type="text" name="description" required /> <br><br><br>
-<b>Paid by:&nbsp&nbsp&nbsp&nbsp&nbsp
-<?php $mysqli = new mysqli("localhost", "root", "", "easyroommate"); 
+            <center ><b>&nbsp &nbsp ADD AN EXPENSE</b></center>
+            <br></br>
+            <div class="container-fluid" style="border:1px solid #cecece;">
+                <br>
+                <form action="expense_added.php" method="post">
+                    <label for="desc">
+                        Description:
+                    </label>
+                    <input type="text" name="description"  required /> <br>
+                    <label for="paid_by">
+                        Paid By: </label>
+                        <select name='paid_by' id='paid_by'>
+                            <?php
+                            echo '<option id="user1">'.$user_data->username.'</option>';
+                            foreach ($get_all_friends as $row){
+                                echo '<option>'.$row->username.'</option>';
+                            }?>
+                        </select>
+                    <br>
+                    <label for="share_with">
+                        Share with: </label>
+                    <select name='share_with' id='share_with'>
+                        <?php
+                        echo '<option id="user2">'.$user_data->username.'</option>';
+                        foreach ($get_all_friends as $row){
+                            echo '<option>'.$row->username.'</option>';
+                        }?>
+                    </select>
+                    <br>
+                    <label for="amount">
+                            Amount:
+                    </label>
+                    <input type="text" name="amount" required />
+                <br>
+                    <input type="submit" name="expense_button" value="Submit" />
+                    <br>
+                </form>
+            </div>
+        </div>
 
-if ($mysqli ==false) { 
-	die("ERROR: Could not connect. ".$mysqli->connect_error); 
-} 
-$result=mysqli_query($mysqli,"select * from users");
-echo"<select name='paid_by' id='paid_by'>";
-echo "<option> Select Person Who Paid the expense</option>";
-while($row=mysqli_fetch_array($result))
-{
-	echo "<option id='user1'>$row[username]</option>";
-}
-echo"</select> <br></br>";
 
-echo "Share With:&nbsp";
-$result=mysqli_query($mysqli,"select * from users");
-echo"<select name='share_with' id='share_with'>";
-
-echo "<option> -- Select Person Whom you want to share the expense with--</option>";
-while($row=mysqli_fetch_array($result))
-{
-	echo "<option id='user2'>$row[username]</option>";
-}
-echo"</select>";
-
-
-?> </b>
-<br></br>
-
-<b>Amount:</b> &nbsp&nbsp&nbsp &nbsp&nbsp<input type="text" name="amount"required /> <br><br>
-<center>
-<input type="submit" name="expense_button" value="Submit" /><br></br>
-</center>
-</form>
-</div>
     </div>
-	</div>
 	</div>
 </body>
 </html>
