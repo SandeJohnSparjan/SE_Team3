@@ -55,8 +55,8 @@ $get_frnd_num = $friend_obj->get_all_friends($_SESSION['user_id'], false);
                 <li><a href="profile.php" rel="noopener noreferrer" class="active">Home</a></li>
 
                 <li><a href="expense.php" rel="noopener noreferrer">Add an Expense</a></li>
-								<li><a href="balance.php" rel="noopener noreferrer">Balance</a></li>
-
+                <li><a href="balance.php" rel="noopener noreferrer">Balance</a></li>
+                <li><a href="groups.php" rel="noopener noreferrer">Groups</a></li>
 
                 <button class="btn dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                     Edit
