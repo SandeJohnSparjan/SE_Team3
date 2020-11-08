@@ -50,7 +50,7 @@ if (isset($_POST['submit'])) {
 <div class="profile_container">
     <div class="inner_profile">
         <div class="img">
-            <img src="profile_images/<?php echo $user_data->user_image;?>" alt="Profile image">
+            <img src="profile_images/<?php echo $user_data->user_image;?>" class="img-fluid" alt="Profile image">
         </div>
         <h1><?php echo $user_data->username;?></h1>
     </div>
