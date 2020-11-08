@@ -7,7 +7,7 @@ class Group
     protected $groupName;
     protected $desc;
     protected $uname;
-
+    protected $gname;
 
     function __construct($db_connection)
     {
@@ -72,9 +72,7 @@ class Group
         try {
             $this->uname = trim($username);
             $sql_res = $this->db->prepare("SELECT group_name,grp_members FROM groups");
-
             $sql_res->execute();
-
             if($sql_res->rowCount() >0) {
                 $all_rows = $sql_res->fetchAll(PDO::FETCH_OBJ);
                 $groupNames = [];
@@ -94,6 +92,34 @@ class Group
                 return false;
             }
         } catch (PDOException $errMsg) {
+            die($errMsg->getMessage());
+        }
+    }
+
+    function find_group_members($groupName){
+        try{
+            $this->gname = trim($groupName);
+            $get_users = $this->db->prepare("SELECT grp_members FROM groups WHERE group_name != ?");
+            $get_users->execute([$groupName]);
+            if($get_users->rowCount() >0){
+                $get_all_users = $get_users->fetch(PDO::FETCH_OBJ);
+                $all_group_users = [];
+                foreach ($get_all_users as $row) {
+                    $name_explode = explode(",", $row);
+                    foreach ($name_explode as $name_user) {
+
+                            array_push($all_group_users,$name_user);
+
+                    }
+
+                }
+                return $all_group_users;
+            }
+            else{
+                return false;
+            }
+        }
+        catch (PDOException $errMsg) {
             die($errMsg->getMessage());
         }
     }

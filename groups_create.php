@@ -77,7 +77,7 @@ $get_frnd_num = $friend_obj->get_all_friends($_SESSION['user_id'], false);
 
             <li><a href="expense.php" rel="noopener noreferrer">Add an Expense</a></li>
             <li><a href="balance.php" rel="noopener noreferrer">Balance</a></li>
-            <li><a href="groups.php" rel="noopener noreferrer">Groups</a></li>
+            <li><a href="groups_create.php" rel="noopener noreferrer">Groups</a></li>
 
             <button class="btn dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                 Edit
@@ -178,6 +178,7 @@ $get_frnd_num = $friend_obj->get_all_friends($_SESSION['user_id'], false);
                 foreach ($retResult as $item) {
                         echo '<div class="user_box">
                                  <div class="user_info"><span>'.$item.'</span></div>
+                                 <span><a href="groups_expense.php?id='.$item.'" class="see_profileBtn">View</a></span>
                                </div>';
                     }
                 ?>
