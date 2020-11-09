@@ -91,6 +91,31 @@ h1{
     padding: 10px;
 }
 
+/* Groups.php */
+.groups_container{
+    /*border: 2px solid #1F9D55;*/
+    /*color: #1F9D55;*/
+    letter-spacing: normal;
+    font-size: 16px;
+    padding: 10px;
+}
+
+.profile_container .user_box .user_ino{
+    flex-wrap: wrap;
+    align-items: center;
+    border: 1px solid rgba(23,23,23, .2);
+    margin: 5px;
+    padding: 5px;
+    width: 48%;
+    background-color: #FFF;
+
+    display: block;
+}
+
+
+
+
+
 /* PROFILE.PHP */
 .profile_container{
     margin:  0 auto;
@@ -192,7 +217,6 @@ h1{
 
 .all_users .usersWrapper{
     display: flex;
-
     flex-wrap: wrap;
     justify-content: center;
 }

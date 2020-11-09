@@ -14,6 +14,16 @@ else{
     exit;
 }
 
+
+//groups
+//creating groups
+if(isset($_POST["group_name"]) && isset($_POST["description"])){
+    $result = $group_obj->createGroups($_POST['group_name'], $_POST['description'],$_POST['name'], $user_data->username);
+}
+
+//retrieving groups which user is present in
+$retResult = $group_obj->retrieveGroups($user_data->username);
+
 //username
 $uname = $user_data->username;
 
@@ -67,7 +77,7 @@ $get_frnd_num = $friend_obj->get_all_friends($_SESSION['user_id'], false);
 
             <li><a href="expense.php" rel="noopener noreferrer">Add an Expense</a></li>
             <li><a href="balance.php" rel="noopener noreferrer">Balance</a></li>
-            <li><a href="groups.php" rel="noopener noreferrer">Groups</a></li>
+            <li><a href="groups_create.php" rel="noopener noreferrer">Groups</a></li>
 
             <button class="btn dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                 Edit
@@ -88,47 +98,26 @@ $get_frnd_num = $friend_obj->get_all_friends($_SESSION['user_id'], false);
     <div class="container">
         <div class="row">
             <div class="col">
-
-                <div class="profile_container">
-                    <div class="user_box"><span><h2>Create Groups</h2></span></div>
+                    <div class="login_signup_container groups_container" >
                     <div class="form-group">
-                        <form name="add_name" id="add_name">
+                        <form action="" method="POST" name="add_name" id="add_name">
 
-
-                        <br />
-                        <br />
                                 <div class="table-responsive">
-                                    <label for="group_name">Group Name:
-                                        <input type="text" name="group_name" placeholder="Enter Group Name">
-                                    </label>
-                                    <label for="description">Description
-                                        <input type="text" name="description" placeholder="Expense Description">
-                                    </label>
-                                    <label for="group_name">Add Group Members: </label>
+                                    <table><tr><th>Create Groups</th></tr></table>
+
                                     <table class="table table-bordered" id="dynamic_field">
+
+                                        <tr>
+                                            <td> <label for="group_name">Group Name:</label></td>
+                                            <td><input type="text" name="group_name" placeholder="Enter Group Name"></td>
+                                        </tr>
+                                        <tr>
+                                            <td><label for="description">Description: </label></td>
+                                            <td><input type="text" name="description" placeholder="Expense Description"></td>
+                                        </tr>
+                                        <tr><td><label for="group_name">Add Group Members: </label></td></tr>
                                         <tr>
                                             <td><input type="text" name="name[]" placeholder="Enter your Name" class="form-control name_list" required></td>
-<!--                                                --><?php
-//
-//                                                if($all_users){
-//                                                    $flag = 0;
-//                                                    foreach($all_users as $row){
-//
-//                                                        if($row->user_email === $email_id && $email_id !== ''){
-//                                                            $flag =1;
-//                                                            echo '<p>User Present</p>';
-//                                                        }
-//                                                    }
-//                                                    if($flag === 0 && $email_id !== ''){
-//                                                        echo '<h4>User not registered</h4>';
-//                                                    }
-//                                                }
-//
-//                                                else{
-//                                                    echo '<h4>There is no User!</h4>';
-//                                                }
-//                                                ?>
-
                                             <td><button type="button" name="add" id="add" class="btn btn-success">Add More</button></td>
                                         </tr>
                                     </table>
@@ -141,6 +130,16 @@ $get_frnd_num = $friend_obj->get_all_friends($_SESSION['user_id'], false);
                                     <input type="button" name="submit" id="submit" class="btn btn-info" value="Submit" />
                                 </div>
                             </form>
+                        <div>
+                            <?php
+                            if(isset($result['errorMessage'])){
+                                echo '<p class="errorMsg">'.$result['errorMessage'].'</p>';
+                            }
+                            if(isset($result['successMessage'])){
+                                echo '<p class="successMsg">'.$result['successMessage'].'</p>';
+                            }
+                            ?>
+                        </div>
                         </div>
 
                     <script>
@@ -156,7 +155,7 @@ $get_frnd_num = $friend_obj->get_all_friends($_SESSION['user_id'], false);
                             });
                             $('#submit').click(function(){
                                 $.ajax({
-                                    url:"group_emails.php",
+                                    url:"",
                                     method:"POST",
                                     data:$('#add_name').serialize(),
                                     success:function(data)
@@ -169,71 +168,21 @@ $get_frnd_num = $friend_obj->get_all_friends($_SESSION['user_id'], false);
                         });
                     </script>
                 </div>
+
             </div>
             <div class="col">
-<!--                <div class="card-body">-->
-<!--                    <form action="" method="POST">-->
-<!--                        <div class="row">-->
-<!--                            <div class="col-md-6">-->
-<!--                                <div class="form-group">-->
-<!--                                    <input type="text"  name= "get_email" class="form-control" placeholder="Enter email ID" required>-->
-<!--                                </div>-->
-<!--                            </div>-->
-<!--                            <div class="col-md-6">-->
-<!--                                <button type="submit" name="fetch_btn" class="btn btn-primary">Search</button>-->
-<!--                            </div>-->
-<!--                        </div>-->
-<!--                    </form>-->
-<!--                </div>-->
                 <div class="profile_container">
-                    <?php
-
-                    $connect = mysqli_connect("localhost", "root", "", "easyroommate");
-                    $reg1= "select group_name,grp_members from groups";//inserting expense details into database
-
-                    $new1=mysqli_query($connect,$reg1);
-
-                    while($row = mysqli_fetch_assoc($new1)) {
-
-                        $name = $row['grp_members'];
-                        $g_name = $row['group_name'];
-                        $name_explode = explode(",", $row['grp_members']);
-                        foreach ($name_explode as $name_user)
-                        if($uname === $name_user){
-                            echo '<div class="user_box">
-                                <div class="user_info"><span>Group Name: '.$g_name.'</span></div>';
-                            echo '<div class="user_info"><span>Group Members:</span>';
-
-                            foreach($name_explode as $i){
-                                echo '<span>'.$i.' </span>';
-
-                                }
-                                '</div></div>';
-                        }
+                <div class="all_users">
+                    <h1>Group Names</h1>
+                <?php
+                foreach ($retResult as $item) {
+                        echo '<div class="user_box">
+                                 <div class="user_info"><span>'.$item.'</span></div>
+                                 <span><a href="groups_expense.php?id='.$item.'" class="see_profileBtn">View</a></span>
+                               </div>';
                     }
-
-                    if($all_users){
-                        $flag = 0;
-                        foreach($all_users as $row){
-
-                            if($row->user_email === $s_id && $s_id !== ''){
-                                $flag =1;
-                                echo '<div class="user_box">
-                                <div class="user_img"><img src="profile_images/'.$row->user_image.'" alt="Profile Image"></div>
-                                <div class="user_info"><span>'.$row->username.'</span>
-                                <span><a href="user_profile.php?id='.$row->id.'" class="see_profileBtn">See Profile</a></span></div>
-                                </div>';
-                            }
-                        }
-                        if($flag=== 0 && $s_id !== ''){
-                            echo '<h4>User not registered</h4>';
-                        }
-                    }
-
-                    else{
-                        echo '<h4>There is no User!</h4>';
-                    }
-                    ?>
+                ?>
+                </div>
                 </div>
             </div>
         </div>
