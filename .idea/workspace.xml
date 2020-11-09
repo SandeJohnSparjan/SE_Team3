@@ -3,9 +3,13 @@
   <component name="ChangeListManager">
     <list default="true" id="c9be299a-1145-48bb-984b-fff530f2defd" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/classes/email.php" beforeDir="false" afterPath="$PROJECT_DIR$/classes/email.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/classes/groups_all.php" beforeDir="false" afterPath="$PROJECT_DIR$/classes/groups_all.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/groups.php" beforeDir="false" afterPath="$PROJECT_DIR$/groups_create.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/profile.php" beforeDir="false" afterPath="$PROJECT_DIR$/profile.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/classes/user.php" beforeDir="false" afterPath="$PROJECT_DIR$/classes/user.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/groups_create.php" beforeDir="false" afterPath="$PROJECT_DIR$/groups_create.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/groups_expense.php" beforeDir="false" afterPath="$PROJECT_DIR$/groups_expense.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/index.php" beforeDir="false" afterPath="$PROJECT_DIR$/index.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/signup.php" beforeDir="false" afterPath="$PROJECT_DIR$/signup.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/style.css" beforeDir="false" afterPath="$PROJECT_DIR$/style.css" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -81,7 +85,9 @@
       <workItem from="1604692384471" duration="1653000" />
       <workItem from="1604710149116" duration="1639000" />
       <workItem from="1604725492250" duration="8326000" />
-      <workItem from="1604800698308" duration="11440000" />
+      <workItem from="1604800698308" duration="12039000" />
+      <workItem from="1604903533098" duration="6297000" />
+      <workItem from="1604959931506" duration="5239000" />
     </task>
     <servers />
   </component>
@@ -93,14 +99,14 @@
       <screen x="0" y="0" width="1536" height="824" />
     </state>
     <state x="499" y="159" key="#com.intellij.refactoring.safeDelete.UnsafeUsagesDialog/0.0.1536.824@0.0.1536.824" timestamp="1604357340938" />
-    <state x="988" y="339" key="NewPhpFileDialog" timestamp="1604803542159">
+    <state x="988" y="339" key="NewPhpFileDialog" timestamp="1604962754432">
       <screen x="0" y="0" width="1536" height="824" />
     </state>
-    <state x="988" y="339" key="NewPhpFileDialog/0.0.1536.824@0.0.1536.824" timestamp="1604803542159" />
-    <state x="401" y="257" key="com.intellij.ide.util.TipDialog" timestamp="1604800698270">
+    <state x="988" y="339" key="NewPhpFileDialog/0.0.1536.824@0.0.1536.824" timestamp="1604962754432" />
+    <state x="401" y="257" key="com.intellij.ide.util.TipDialog" timestamp="1604960010655">
       <screen x="0" y="0" width="1536" height="824" />
     </state>
-    <state x="401" y="257" key="com.intellij.ide.util.TipDialog/0.0.1536.824@0.0.1536.824" timestamp="1604800698270" />
+    <state x="401" y="257" key="com.intellij.ide.util.TipDialog/0.0.1536.824@0.0.1536.824" timestamp="1604960010655" />
     <state x="425" y="187" key="run.anything.popup" timestamp="1604729884063">
       <screen x="0" y="0" width="1536" height="824" />
     </state>

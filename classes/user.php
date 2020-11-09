@@ -108,6 +108,23 @@ class User{
         }
     }
 
+    //find user by email
+    function email_in_db($emailId){
+        try{
+            $find_user = $this->db->prepare("SELECT * FROM users WHERE user_email =?");
+            $find_user->execute([$emailId]);
+            if($find_user->rowCount() === 1){
+                return true;
+            }
+            else{
+                return false;
+            }
+        }
+        catch(PDOException $errMsg){
+            die($errMsg->getMessage());
+        }
+    }
+
     //Fetch all users
     function all_users($id){
         try{
@@ -138,4 +155,28 @@ class User{
 //            die($errMsg->getMessage());
 //        }
 //    }
+
+    //reset password
+    function resetPassword($email, $new_pass, $conf_pass ){
+        try {
+            if($new_pass === $conf_pass){
+
+            $this->user_email = trim($email);
+            $this->user_pass = trim($new_pass);
+
+            $this->hash_pass = password_hash($this->user_pass, PASSWORD_DEFAULT);
+
+            $change_pass = $this->db->prepare("UPDATE users SET user_password = ? WHERE user_email = ?");
+            $change_pass->execute([$this->hash_pass, $this->user_email]);
+
+            return ['successMessage' => 'Password Successfully changed. Please Login'];
+            }
+            else{
+                return ['errorMessage' => 'Passwords do not match! Please try again!'];
+            }
+        }
+        catch (PDOException $errorMsg){
+            die($errorMsg->getMessage());
+        }
+    }
 }

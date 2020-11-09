@@ -67,26 +67,54 @@ class Group
         }
     }
 
-    function retrieveGroups($username)
+    function allGroups($username)
     {
         try {
             $this->uname = trim($username);
-            $sql_res = $this->db->prepare("SELECT group_name,grp_members FROM groups");
+            $sql_res = $this->db->prepare("SELECT id,group_name,grp_members FROM groups");
+            $sql_res->execute();
+            if($sql_res->rowCount() >0) {
+                $all_rows = $sql_res->fetchAll(PDO::FETCH_OBJ);
+
+                return $all_rows;
+            }
+            else{
+                return false;
+            }
+        } catch (PDOException $errMsg) {
+            die($errMsg->getMessage());
+        }
+    }
+
+    function retrieveGroups($username, $bool_value)
+    {
+        try {
+            $this->uname = trim($username);
+            $sql_res = $this->db->prepare("SELECT id,group_name,grp_members FROM groups");
             $sql_res->execute();
             if($sql_res->rowCount() >0) {
                 $all_rows = $sql_res->fetchAll(PDO::FETCH_OBJ);
                 $groupNames = [];
+                $groupIds = [];
                 foreach ($all_rows as $row) {
                     $g_name = $row->group_name;
+                    $g_id = $row->id;
                     $name_explode = explode(",", $row->grp_members);
                     foreach ($name_explode as $name_user) {
                         if ($this->uname === $name_user) {
                             array_push($groupNames,$g_name);
+                            array_push($groupIds,$g_id);
                         }
                     }
 
                 }
-                return $groupNames;
+                if($bool_value){
+                    return $groupNames;
+                }
+                else{
+                    return $groupIds;
+                }
+
             }
             else{
                 return false;

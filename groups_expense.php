@@ -88,74 +88,74 @@ $get_frnd_num = $friend_obj->get_all_friends($_SESSION['user_id'], false);
     <div class="container">
         <div class="row">
             <div class="col">
+                <div class="login_signup_container groups_container" >
+                    <div class="form-group">
+                        <form action="" method="POST" name="add_name" id="add_name">
+                            <div class="table-responsive">
+                                <table><tr><th>Create Group Expense</th></tr></table>
 
-                <p>Group expense form yet to be done</p>
-<!--                <div class="login_signup_container groups_container" >-->
-<!--                    <div class="form-group">-->
-<!--                        <form action="" method="POST" name="add_name" id="add_name">-->
-<!--                            <div class="table-responsive">-->
-<!--                                <table><tr><th>Create Groups</th></tr></table>-->
-<!---->
-<!--                                <table class="table table-bordered" id="dynamic_field">-->
-<!---->
-<!--                                    <tr>-->
-<!--                                        <td> <label for="group_name">Group Name:</label></td>-->
-<!--                                        <td><input type="text" name="group_name" placeholder="Enter Group Name"></td>-->
-<!--                                    </tr>-->
-<!--                                    <tr>-->
-<!--                                        <td><label for="description">Description: </label></td>-->
-<!--                                        <td><input type="text" name="description" placeholder="Expense Description"></td>-->
-<!--                                    </tr>-->
+                                <table class="table table-bordered" id="dynamic_field">
+
+                                    <tr>
+                                        <td> <label for="expense_name">Expense name:</label></td>
+                                        <td><input type="text" name="expense_name" placeholder="Enter Group Name"></td>
+                                    </tr>
+                                    <tr>
+                                        <td><label for="description">Description: </label></td>
+                                        <td><input type="text" name="description" placeholder="Expense Description"></td>
+                                    </tr>
+                                    <tr>
+                                        <td><label for="amount">Amount:</label></td>
+                                        <td><input type="text" name="amount" placeholder="Enter amount"></td>
+                                    </tr>
+
+                                    <tr>
+                                        <td>Check box with group members names</td>
+                                    </tr>
+
 <!--                                    <tr><td><label for="group_name">Add Group Members: </label></td></tr>-->
 <!--                                    <tr>-->
 <!--                                        <td><input type="text" name="name[]" placeholder="Enter your Name" class="form-control name_list" required></td>-->
 <!--                                        <td><button type="button" name="add" id="add" class="btn btn-success">Add More</button></td>-->
 <!--                                    </tr>-->
-<!--                                </table>-->
-                                <!--                                    <label for="amount">Amount:-->
-                                <!--                                        <input type="text" name="amount" placeholder="Enter amount">-->
-                                <!--                                    </label>-->
-                                <!--                                    <label for="split_type">Split type:-->
-                                <!--                                        <input type="text" name="Split Type" placeholder="Enter Group Name">-->
-                                <!--                                    </label>-->
-<!--                                <input type="button" name="submit" id="submit" class="btn btn-info" value="Submit" />-->
-<!--                            </div>-->
-<!--                        </form>-->
-<!---->
-<!--                    </div>-->
-<!---->
-<!--                    <script>-->
-<!--                        $(document).ready(function(){-->
-<!--                            var i=1;-->
-<!--                            $('#add').click(function(){-->
-<!--                                i++;-->
-<!--                                $('#dynamic_field').append('<tr id="row'+i+'"><td><input type="text" name="name[]" placeholder="Enter your Name" class="form-control name_list" required /></td><td><button type="button" name="remove" id="'+i+'" class="btn btn-danger btn_remove">X</button></td></tr>');-->
-<!--                            });-->
-<!--                            $(document).on('click', '.btn_remove', function(){-->
-<!--                                var button_id = $(this).attr("id");-->
-<!--                                $('#row'+button_id+'').remove();-->
-<!--                            });-->
-<!--                            $('#submit').click(function(){-->
-<!--                                $.ajax({-->
-<!--                                    url:"",-->
-<!--                                    method:"POST",-->
-<!--                                    data:$('#add_name').serialize(),-->
-<!--                                    success:function(data)-->
-<!--                                    {-->
-<!--                                        //alert(data);-->
-<!--                                        $('#add_name')[0].reset();-->
-<!--                                    }-->
-<!--                                });-->
-<!--                            });-->
-<!--                        });-->
-<!--                    </script>-->
-<!--                </div>-->
+                                </table>
+                            </div>
+                        </form>
+
+                    </div>
+
+                    <script>
+                        $(document).ready(function(){
+                            var i=1;
+                            $('#add').click(function(){
+                                i++;
+                                $('#dynamic_field').append('<tr id="row'+i+'"><td><input type="text" name="name[]" placeholder="Enter your Name" class="form-control name_list" required /></td><td><button type="button" name="remove" id="'+i+'" class="btn btn-danger btn_remove">X</button></td></tr>');
+                            });
+                            $(document).on('click', '.btn_remove', function(){
+                                var button_id = $(this).attr("id");
+                                $('#row'+button_id+'').remove();
+                            });
+                            $('#submit').click(function(){
+                                $.ajax({
+                                    url:"",
+                                    method:"POST",
+                                    data:$('#add_name').serialize(),
+                                    success:function(data)
+                                    {
+                                        //alert(data);
+                                        $('#add_name')[0].reset();
+                                    }
+                                });
+                            });
+                        });
+                    </script>
+                </div>
 
             </div>
             <div class="col">
                 <div class="profile_container">
                     <div class="all_users">
-                        <h1>Group Members</h1>
+                        <h4>Group Members</h4>
                         <?php
                         if($all_users){
                             foreach ($group_data as $item) {
