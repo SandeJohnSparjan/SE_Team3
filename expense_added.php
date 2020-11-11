@@ -145,7 +145,7 @@ if ($mysqli ==false) {
 
     </div>*/
 	?>
-	<script type="text/javascript">location.href = 'balance.php';</script>
+	<script type="text/javascript">location.href = 'profile.php';</script>
 
 </body>
 </html>

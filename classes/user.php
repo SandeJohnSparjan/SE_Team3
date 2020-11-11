@@ -27,7 +27,7 @@ class User{
                         return ['errorMessage' => 'This email address is already registered!! Try another one!'];
                     } else {
 
-                        $user_image = rand(1, 12);
+                        $user_image = 'rand3';
 
                         $this->hash_pass = password_hash($this->user_pass, PASSWORD_DEFAULT);
                         $sql = "INSERT INTO users (username, user_email, user_password, user_image) VALUES (:username, :user_email, :user_pass, :user_image)";
