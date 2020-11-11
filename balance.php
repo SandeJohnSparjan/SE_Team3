@@ -51,13 +51,13 @@ $get_frnd_num = $friend_obj->get_all_friends($_SESSION['user_id'], false);
 		<link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
 
 
-        <nav>
+         <nav>
             <ul>
-                <li><a href="profile.php" rel="noopener noreferrer" class="active">Home</a></li>
+                <li><a href="profile.php" rel="noopener noreferrer" >Home</a></li>
 
                 <li><a href="expense.php" rel="noopener noreferrer">Add an Expense</a></li>
-								<li><a href="balance.php" rel="noopener noreferrer">Balance</a></li>
-
+                <li><a href="balance.php" rel="noopener noreferrer"class="active">Balance</a></li>
+                <li><a href="groups_create.php" rel="noopener noreferrer">Groups</a></li>
 
                 <button class="btn dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                     Edit

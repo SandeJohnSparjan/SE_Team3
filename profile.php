@@ -147,4 +147,3 @@ $get_frnd_num = $friend_obj->get_all_friends($_SESSION['user_id'], false);
     </div>
 </body>
 </html>
-
