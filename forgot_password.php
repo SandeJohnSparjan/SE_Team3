@@ -2,10 +2,9 @@
 require 'includes/init.php';
 
 //if user is making a sign up request
-if(isset($_POST['username']) && isset($_POST['email']) && isset($_POST['password'])){
-    $result = $user_obj->signUp($_POST['username'], $_POST['email'],$_POST['password']);
-
-    $email_result = $email_obj->sendRegistrationEmail($_POST['username'], $_POST['email']);
+if(isset($_POST['email'])){
+    $result = $user_obj->email_in_db($_POST['email']);
+    $email_result = $email_obj->sendForgotPassEmail($_POST['email'],$result);
 }
 
 //user logged in already
@@ -20,23 +19,18 @@ if(isset($_SESSION['email'])){
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-eqiv="X-UA-Compatible" content="ie=edge">
-    <title>Login</title>
+    <title>Forgot Password</title>
     <link rel="stylesheet" href="./style.css">
     <link href="https://fonts.googleapis.com/css?family=Open+Sans:400,700" rel="stylesheet">
 </head>
 <body>
 <div class="main_container login_signup_container">
-    <h1>Sign Up</h1>
+    <h1>Forgot Password?</h1>
     <form action="" method="POST" novalidate>
-        <label for="username">Full Name</label>
-        <input type="text" id="username" name="username" spellcheck="false" placeholder="Enter your full name" required>
+        <h5>Please enter you registered email ID, a password reset link will be sent to your email address</h5>
         <label for="email">Email</label>
-        <input type="email" id="email" name="email" spellcheck=
-
-        "false" placeholder="Enter your email address" required>
-        <label for="password">Password</label>
-        <input type="password" id="password" name="password" placeholder="Enter your password" required>
-        <input type="submit" name="sendMail" value="Sign Up">
+        <input type="email" id="email" name="email" spellcheck="false" placeholder="Enter your email address" required>
+        <input type="submit" name="sendMail" value="Send link">
         <a href="index.php" class="form_link">Login</a>
     </form>
     <div>
