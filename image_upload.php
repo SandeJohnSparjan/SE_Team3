@@ -82,7 +82,8 @@ if (isset($_POST['submit'])) {
 <div class="inner_profile">
     <form action="" method="post" enctype="multipart/form-data">
         <input type="file" name="file" placeholder="Upload a file">
-        <input type="submit" name="submit">
+        <input type="submit" name="submit"><br><br>
+		<label> Image dimensions should be less than 600x800 pixels </label>
     </form>
 
 </div>
