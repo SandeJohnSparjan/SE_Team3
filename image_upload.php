@@ -57,30 +57,33 @@ if (isset($_POST['submit'])) {
 
 
     <nav>
-        <ul>
-            <li><a href="profile.php" rel="noopener noreferrer" class="active">Home</a></li>
+            <ul>
+                <li><a href="profile.php" rel="noopener noreferrer" >Home</a></li>
 
-            <li><a href="expense.php" rel="noopener noreferrer">Add an Expense</a></li>
+                <li><a href="expense.php" rel="noopener noreferrer">Add an Expense</a></li>
+                <li><a href="balance.php" rel="noopener noreferrer">Balance</a></li>
+                <li><a href="groups_create.php" rel="noopener noreferrer">Groups</a></li>
 
-            <button class="btn dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                Edit
-            </button>
-            <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                <a class="dropdown-item" href="notifications.php" rel="noopener noreferrer">Requests<span class="badge <?php
-                    if($get_req_num > 0){
-                        echo 'redBadge';
-                    }
-                    ?>"><?php echo $get_req_num;?></span></a>
-                <a class="dropdown-item" href="friends.php" rel="noopener noreferrer">Friends<span class="badge"><?php echo $get_frnd_num;?></span></a>
-                <a class="dropdown-item" href="image_upload.php" rel="noopener noreferrer">Change Pic</a>
-                <a class="dropdown-item" href="logout.php" rel="noopener noreferrer">Logout</a>
-            </div>
-        </ul>
-    </nav>
+                <button class="btn dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    Edit
+                </button>
+                <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                    <a class="dropdown-item" href="notifications.php" rel="noopener noreferrer">Requests<span class="badge <?php
+                        if($get_req_num > 0){
+                            echo 'redBadge';
+                        }
+                        ?>"><?php echo $get_req_num;?></span></a>
+                    <a class="dropdown-item" href="friends.php" rel="noopener noreferrer">Friends<span class="badge"><?php echo $get_frnd_num;?></span></a>
+                    <a class="dropdown-item" href="image_upload.php" rel="noopener noreferrer">Change Pic</a>
+                    <a class="dropdown-item" href="logout.php" rel="noopener noreferrer">Logout</a>
+                </div>
+            </ul>
+        </nav>
 <div class="inner_profile">
     <form action="" method="post" enctype="multipart/form-data">
         <input type="file" name="file" placeholder="Upload a file">
-        <input type="submit" name="submit">
+        <input type="submit" name="submit"><br><br>
+		<label> Image dimensions should be less than 600x800 pixels </label>
     </form>
 
 </div>

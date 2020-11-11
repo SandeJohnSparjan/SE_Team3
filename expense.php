@@ -54,13 +54,13 @@ $get_all_friends = $friend_obj->get_all_friends($_SESSION['user_id'], true);
 		<link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
 
 
-        <nav>
+           <nav>
             <ul>
-                <li><a href="profile.php" rel="noopener noreferrer" class="active">Home</a></li>
+                <li><a href="profile.php" rel="noopener noreferrer" >Home</a></li>
 
-                <li><a href="expense.php" rel="noopener noreferrer">Add an Expense</a></li>
-								<li><a href="balance.php" rel="noopener noreferrer">Balance</a></li>
-
+                <li><a href="expense.php" rel="noopener noreferrer" class="active">Add an Expense</a></li>
+                <li><a href="balance.php" rel="noopener noreferrer">Balance</a></li>
+                <li><a href="groups_create.php" rel="noopener noreferrer">Groups</a></li>
 
                 <button class="btn dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                     Edit
@@ -89,17 +89,10 @@ $get_all_friends = $friend_obj->get_all_friends($_SESSION['user_id'], true);
                     </label>
                     <input type="text" name="description"  required /> <br>
                     <label for="paid_by">
-                        Paid By: </label>
-                        <select name='paid_by' id='paid_by'>
-                            <?php
-                            echo '<option id="user1">'.$user_data->username.'</option>';
-                            foreach ($get_all_friends as $row){
-                                echo '<option>'.$row->username.'</option>';
-                            }?>
-                        </select>
-                    <br>
-                    <label for="share_with">
-                        Share with: </label>
+                        With you and: </label>
+                       
+                    &nbsp
+                   
                     <select name='share_with' id='share_with'>
                         <?php
                         echo '<option id="user2">'.$user_data->username.'</option>';
@@ -111,8 +104,22 @@ $get_all_friends = $friend_obj->get_all_friends($_SESSION['user_id'], true);
                     <label for="amount">
                             Amount:
                     </label>
+					
                     <input type="text" name="amount" required />
+					
                 <br>
+				<label for="split_type">Split Type: </label><br>
+				<input type="radio" id="you_equally" name="split" value="you_equally">
+				<label for="you_equally">Paid by you and Share Equally</label><br>
+				<input type="radio" id="them_equally" name="split" value="them_equally">
+				<label for="them_equally">Paid by them and Share Equally</label><br>
+				<input type="radio" id="they_owe" name="split" value="they_owe">
+				<label for="they_owe">They owe you completely</label><br>
+				<input type="radio" id="you_owe" name="split" value="you_owe">
+				<label for="you_owe">you owe them completely</label>
+	
+				
+				
                     <input type="submit" name="expense_button" value="Submit" />
                     <br>
                 </form>

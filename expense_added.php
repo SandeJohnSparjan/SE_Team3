@@ -55,6 +55,8 @@ $get_frnd_num = $friend_obj->get_all_friends($_SESSION['user_id'], false);
                 <li><a href="profile.php" rel="noopener noreferrer" class="active">Home</a></li>
 
                 <li><a href="expense.php" rel="noopener noreferrer">Add an Expense</a></li>
+								<li><a href="balance.php" rel="noopener noreferrer">Balance</a></li>
+
 
                 <button class="btn dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                     Edit
@@ -75,20 +77,50 @@ $get_frnd_num = $friend_obj->get_all_friends($_SESSION['user_id'], false);
 <?php 
 $exp_name=$_POST['description'];
 $amount=$_POST['amount'];
-$paid_by = $_POST['paid_by'];
-    if (isset($_POST['paid_by'])) {
-    $user1 = $_POST['paid_by'];
-}
-if (isset($_POST['share_with'])) {
-    $user2 = $_POST['share_with'];
-}
+
+$split=$_POST['split'];
+
+	if($split=="you_equally")
+	{
+		$paid_by = $user_data->username;
+    $user1 = $user_data->username;
+	$user2 = $_POST['share_with'];
 $amount1=$amount/2;
 $amount2=$amount/2;
+	}
+	if($split=="them_equally")
+	{
+		$paid_by = $_POST['share_with'];
+    $user1 = $_POST['share_with'];
+	 $user2 = $user_data->username;
+$amount1=$amount/2;
+$amount2=$amount/2;
+	}
+	if ($split=="they_owe")
+	{
+		$paid_by = $user_data->username;
+    $user1 = $user_data->username;
+	$user2 = $_POST['share_with'];
+		$amount2=0;
+		$amount1=$amount;
+	}
+	if ($split=="you_owe")
+	{
+				$paid_by = $_POST['share_with'];
+
+		 $user1 = $_POST['share_with'];
+	 $user2 = $user_data->username;
+		$amount1=0;
+		$amount2=$amount;
+	}
+	
+//$amount1=$amount/2;
+//$amount2=$amount/2;		
 $mysqli = new mysqli("localhost", "root", "", "easyroommate"); 
 if ($mysqli ==false) { 
 	die("ERROR: Could not connect. ".$mysqli->connect_error); 
 } 
-	$reg=" insert into expense(exp_name,amount1,amount2,user1,user2,total_amount,paid_by) values ('$exp_name','$amount1','$amount1','$user1','$user2','$amount','$paid_by')";//inserting expense details into database
+	$reg=" insert into expense(exp_name,amount1,amount2,user1,user2,total_amount,paid_by) values ('$exp_name','$amount1','$amount2','$user1','$user2','$amount','$paid_by')";//inserting expense details into database
 	$query=mysqli_query($mysqli,$reg);
 	// $ex1="SELECT SUM(amount1) as sum FROM expense WHERE user1='shravani'";
 	$ex1 = mysqli_query($mysqli, "SELECT SUM(amount1) as sum1 FROM expense WHERE user1='$user1'"); 
@@ -113,7 +145,7 @@ if ($mysqli ==false) {
 
     </div>*/
 	?>
-	<script type="text/javascript">location.href = 'balance.php';</script>
+	<script type="text/javascript">location.href = 'profile.php';</script>
 
 </body>
 </html>
