@@ -182,12 +182,12 @@ $get_frnd_num = $friend_obj->get_all_friends($_SESSION['user_id'], false);
                 <div class="all_users">
                     <h1>Group Names</h1>
                 <?php
+
                 if($retResult){
                     foreach ($retResultId as $id_num){
                         foreach ($retResult as $item) {
                             foreach ($retAllGroups as $row){
                                 if($row->id === $id_num and $row->group_name === $item){
-
                                     echo '<div class="user_box">
                                  <div class="user_info"><span>'.$item.'</span></div>
                                  <span><a href="groups_expense.php?id='.$id_num.'" class="see_profileBtn">View</a></span>
@@ -205,6 +205,7 @@ $get_frnd_num = $friend_obj->get_all_friends($_SESSION['user_id'], false);
                                </div>';
 
                 }
+				}
 
 
                 ?>
