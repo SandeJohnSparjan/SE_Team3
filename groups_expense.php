@@ -14,6 +14,17 @@ if(isset($_SESSION['user_id']) && isset($_SESSION['email'])){
 //            exit;
 //        }
     }
+
+    //inserting group expense data
+    if(isset($_POST['expense_name']) && isset($_POST['description']) && isset($_POST['amount'])){
+        $result = $group_obj->groupExpense($_GET['id'],$_POST['expense_name'], $_POST['description'],$_POST['amount'],$_POST['name']);
+        if($result){
+            echo 'Insert successful';
+        }
+        else{
+            echo 'insert unsuccessful';
+        }
+    }
 }
 else{
     header('Location: logout.php');
@@ -110,45 +121,45 @@ $get_frnd_num = $friend_obj->get_all_friends($_SESSION['user_id'], false);
                                     </tr>
 
                                     <tr>
-                                        <td>Check box with group members names</td>
-                                    </tr>
+                                        <td><label for="split_with">Split with:</label></td>
+                                        <td>
+                                            <?php
+                                            if($all_users){
+                                                foreach ($group_data as $item) {
+                                                    foreach ($all_users as $row) {
+                                                        if ($row->username === $item) {
+                                                            $uid = $row->id;
+                                                        } elseif ($uname === $item) {
+                                                            $uid = $user_data->id;
+                                                        }
 
-<!--                                    <tr><td><label for="group_name">Add Group Members: </label></td></tr>-->
-<!--                                    <tr>-->
-<!--                                        <td><input type="text" name="name[]" placeholder="Enter your Name" class="form-control name_list" required></td>-->
-<!--                                        <td><button type="button" name="add" id="add" class="btn btn-success">Add More</button></td>-->
-<!--                                    </tr>-->
+                                                    }
+
+                                            echo '<input type="checkbox" id="'.$item.'" name="[]" value="'.$item.'">
+                                            <label for="'.$item.'"> '.$item.'</label><br>';
+                                            }
+                                            }
+                                            ?>
+
+                                        </td>
+
+                                    </tr>
+                                    
                                 </table>
+                                <input type="button" name="submit" id="submit" class="btn btn-info" value="Submit" />
                             </div>
                         </form>
-
+                        <div>
+                            <?php
+                            if(isset($result['errorMessage'])){
+                                echo '<p class="errorMsg">'.$result['errorMessage'].'</p>';
+                            }
+                            if(isset($result['successMessage'])){
+                                echo '<p class="successMsg">'.$result['successMessage'].'</p>';
+                            }
+                            ?>
+                        </div>
                     </div>
-
-                    <script>
-                        $(document).ready(function(){
-                            var i=1;
-                            $('#add').click(function(){
-                                i++;
-                                $('#dynamic_field').append('<tr id="row'+i+'"><td><input type="text" name="name[]" placeholder="Enter your Name" class="form-control name_list" required /></td><td><button type="button" name="remove" id="'+i+'" class="btn btn-danger btn_remove">X</button></td></tr>');
-                            });
-                            $(document).on('click', '.btn_remove', function(){
-                                var button_id = $(this).attr("id");
-                                $('#row'+button_id+'').remove();
-                            });
-                            $('#submit').click(function(){
-                                $.ajax({
-                                    url:"",
-                                    method:"POST",
-                                    data:$('#add_name').serialize(),
-                                    success:function(data)
-                                    {
-                                        //alert(data);
-                                        $('#add_name')[0].reset();
-                                    }
-                                });
-                            });
-                        });
-                    </script>
                 </div>
 
             </div>
@@ -159,11 +170,10 @@ $get_frnd_num = $friend_obj->get_all_friends($_SESSION['user_id'], false);
                         <?php
                         if($all_users){
                             foreach ($group_data as $item) {
-                                foreach ($all_users as $row){
-                                    if($row->username === $item){
+                                foreach ($all_users as $row) {
+                                    if ($row->username === $item) {
                                         $uid = $row->id;
-                                    }
-                                    elseif($uname === $item){
+                                    } elseif ($uname === $item) {
                                         $uid = $user_data->id;
                                     }
 
@@ -178,6 +188,7 @@ $get_frnd_num = $friend_obj->get_all_friends($_SESSION['user_id'], false);
                                 elseif ($uname === $item){
                                     echo '</div>';
                                 }
+
                             }
                         }
                         ?>
