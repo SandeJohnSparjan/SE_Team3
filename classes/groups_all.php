@@ -86,6 +86,24 @@ class Group
         }
     }
 
+    function groupName($id){
+        try{
+            $sql_res = $this->db->prepare("SELECT group_name FROM groups WHERE id = ?");
+            $sql_res->execute([$id]);
+            if($sql_res->rowCount() >0){
+                $get_group_name = $sql_res->fetch(PDO::FETCH_OBJ);
+                return $get_group_name;
+            }
+            else{
+                return false;
+            }
+
+        }
+        catch (PDOException $errMsg){
+            die($errMsg->getMessage());
+        }
+    }
+
     function retrieveGroups($username, $bool_value)
     {
         try {

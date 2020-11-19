@@ -9,6 +9,7 @@ if(isset($_SESSION['user_id']) && isset($_SESSION['email'])){
     //getting username from URL and retrieving from SQL
     if(isset($_GET['id'])){
         $group_data = $group_obj->find_group_members($_GET['id']);
+        $group_name = $group_obj->groupName($_GET['id']);
 //        if($group_data===false){
 //            header('Location: profile.php');
 //            exit;
@@ -68,6 +69,7 @@ $get_frnd_num = $friend_obj->get_all_friends($_SESSION['user_id'], false);
             <img src="profile_images/<?php echo $user_data->user_image;?>" alt="Profile image">
         </div>
         <h1><?php echo $user_data->username;?></h1>
+        <h1>Group Name: <u><?php echo $group_name->group_name;?></u></h1>
     </div>
 
 
