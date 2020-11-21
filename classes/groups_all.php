@@ -171,19 +171,20 @@ class Group
     }
 
 
-    function groupExpense($groupId,$group_exp_name, $description, $amount, $name)
+    function groupExpense($groupId,$group_exp_name, $description, $amount, $name, $paidBy)
     {
         try {
             $this->groupExpName = trim($group_exp_name);
             $this->description = trim($description);
             $this->amount = trim($amount);
             $this->groupMembers = $name;
+            $this->paidBy = $paidBy;
 
             //number of group member inputs
             $number = count($_POST["name"]);
 
             //all the members who go into groups
-            $groupsExp = [];
+            $groupsExp = [$this->paidBy];
             for ($i = 0; $i < $number; $i++) {
                 if (trim($_POST["name"][$i] != '')) {
                     //$sql = "INSERT INTO tbl_name(name) VALUES('".mysqli_real_escape_string($connect, $_POST["name"][$i])."')";
@@ -191,10 +192,11 @@ class Group
                     array_push($groupsExp, $this->groupMembers[$i]);
                 }
             }
+
             //converting array to string
             $groups_values = implode(",", $groupsExp);
 
-            if (!empty($this->groupExpName) && !empty($this->desc)) {
+            if (!empty($this->groupExpName) && !empty($this->description)) {
                 $check_group = $this->db->prepare("SELECT * FROM group_expense WHERE expense_name = ?");
                 $check_group->execute([$this->groupExpName]);
 
@@ -202,14 +204,15 @@ class Group
                     return ['errorMessage' => 'This group expense name already exists!! Try another one!'];
                 } else {
 
-                    $sql = "INSERT INTO group_expense (group_id,expense_name,desc,amount,grp_members) VALUES (:group_id,:expense_name,:desc,:amount,:grp_members)";
+                    $sql = "INSERT INTO group_expense (group_id,expense_name,description,amount,grp_members,paid_by) VALUES (:group_id,:expense_name,:description,:amount,:grp_members,:paid_by)";
 
                     $register_stmt = $this->db->prepare($sql);
                     $register_stmt->bindValue(':group_id', $groupId, PDO::PARAM_INT);
-                    $register_stmt->bindValue(':expense_name', $this->groupName, PDO::PARAM_STR);
-                    $register_stmt->bindValue(':desc', $this->desc, PDO::PARAM_STR);
+                    $register_stmt->bindValue(':expense_name', $this->groupExpName, PDO::PARAM_STR);
+                    $register_stmt->bindValue(':description', $this->description, PDO::PARAM_STR);
                     $register_stmt->bindValue(':amount', $this->amount, PDO::PARAM_INT);
                     $register_stmt->bindValue(':grp_members', $groups_values, PDO::PARAM_STR);
+                    $register_stmt->bindValue(':paid_by', $this->paidBy, PDO::PARAM_STR);
 
                     $register_stmt->execute();
 

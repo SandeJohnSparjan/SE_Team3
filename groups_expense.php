@@ -18,13 +18,7 @@ if(isset($_SESSION['user_id']) && isset($_SESSION['email'])){
 
     //inserting group expense data
     if(isset($_POST['expense_name']) && isset($_POST['description']) && isset($_POST['amount'])){
-        $result = $group_obj->groupExpense($_GET['id'],$_POST['expense_name'], $_POST['description'],$_POST['amount'],$_POST['name']);
-        if($result){
-            echo 'Insert successful';
-        }
-        else{
-            echo 'insert unsuccessful';
-        }
+        $result = $group_obj->groupExpense($_GET['id'],$_POST['expense_name'], $_POST['description'],$_POST['amount'],$_POST['name'],$user_data->username);
     }
 }
 else{
@@ -128,17 +122,10 @@ $get_frnd_num = $friend_obj->get_all_friends($_SESSION['user_id'], false);
                                             <?php
                                             if($all_users){
                                                 foreach ($group_data as $item) {
-                                                    foreach ($all_users as $row) {
-                                                        if ($row->username === $item) {
-                                                            $uid = $row->id;
-                                                        } elseif ($uname === $item) {
-                                                            $uid = $user_data->id;
-                                                        }
-
+                                                    if($item !== $user_data->username) {
+                                                        echo '<input type="checkbox" id="' . $item . '" name="name[]" value="' . $item . '">
+                                                    <label for="' . $item . '"> ' . $item . '</label><br>';
                                                     }
-
-                                            echo '<input type="checkbox" id="'.$item.'" name="[]" value="'.$item.'">
-                                            <label for="'.$item.'"> '.$item.'</label><br>';
                                             }
                                             }
                                             ?>
@@ -148,8 +135,9 @@ $get_frnd_num = $friend_obj->get_all_friends($_SESSION['user_id'], false);
                                     </tr>
                                     
                                 </table>
-                                <input type="button" name="submit" id="submit" class="btn btn-info" value="Submit" />
+
                             </div>
+                            <input type="submit" name="submit" id="submit" class="btn btn-info" value="Submit" />
                         </form>
                         <div>
                             <?php
