@@ -8,7 +8,9 @@ if(isset($_SESSION['user_id']) && isset($_SESSION['email'])){
 
     //getting username from URL and retrieving from SQL
     if(isset($_GET['id'])){
+        $groupId = $_GET['id'];
         $group_data = $group_obj->find_group_members($_GET['id']);
+        $group_expense_data = $group_obj->find_group_expense($_GET['id']);
         $group_name = $group_obj->groupName($_GET['id']);
 //        if($group_data===false){
 //            header('Location: profile.php');
@@ -183,6 +185,26 @@ $get_frnd_num = $friend_obj->get_all_friends($_SESSION['user_id'], false);
                         }
                         ?>
                     </div>
+
+                    <div class="all_users">
+                        <h4>Group Expenses</h4>
+                        <?php
+                            if($group_expense_data) {
+                                foreach ($group_expense_data as $item) {
+                                    echo '<div class="user_box">
+                                 <div class="user_info"><span>' . $item->expense_name . '</span></div>
+                                 <span><a href="group_expense_profile.php?id=' . $item->expense_name . '" class="see_profileBtn">View</a></span></div>';
+                                }
+                            }
+                            else{
+                                echo '<div class="user_box">
+                                 <div class="user_info"><span>There are no expenses</span></div>
+                                 
+                               </div>';
+                            }
+                        ?>
+                    </div>
+
                 </div>
             </div>
         </div>

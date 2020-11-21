@@ -228,4 +228,68 @@ class Group
 
         }
     }
+
+    function find_group_expense($groupId){
+        try{
+
+            $get_expenses = $this->db->prepare("SELECT group_id,expense_name,description,amount,paid_by FROM group_expense WHERE group_id = ?");
+            $get_expenses->execute([$groupId]);
+            if($get_expenses->rowCount() >0){
+                $get_all_expenses = $get_expenses->fetchAll(PDO::FETCH_OBJ);
+                return $get_all_expenses;
+            }
+            else{
+                return false;
+            }
+        }
+        catch (PDOException $errMsg) {
+            die($errMsg->getMessage());
+        }
+    }
+
+    function find_group_expenses($exName){
+        try{
+
+            $get_expenses = $this->db->prepare("SELECT group_id,expense_name,description,amount,paid_by FROM group_expense WHERE expense_name = ?");
+            $get_expenses->execute([$exName]);
+            if($get_expenses->rowCount() >0){
+                $get_all_expenses = $get_expenses->fetchAll(PDO::FETCH_OBJ);
+                return $get_all_expenses;
+            }
+            else{
+                return false;
+            }
+        }
+        catch (PDOException $errMsg) {
+            die($errMsg->getMessage());
+        }
+    }
+
+    function find_group_expense_members($groupId){
+        try{
+            //$this->gname = trim($groupName);
+            $get_users = $this->db->prepare("SELECT grp_members FROM group_expense WHERE expense_name = ?");
+            $get_users->execute([$groupId]);
+            if($get_users->rowCount() >0){
+                $get_all_users = $get_users->fetch(PDO::FETCH_OBJ);
+                $all_group_users = [];
+                foreach ($get_all_users as $row) {
+                    $name_explode = explode(",", $row);
+                    foreach ($name_explode as $name_user) {
+
+                        array_push($all_group_users,$name_user);
+
+                    }
+
+                }
+                return $all_group_users;
+            }
+            else{
+                return false;
+            }
+        }
+        catch (PDOException $errMsg) {
+            die($errMsg->getMessage());
+        }
+    }
 }

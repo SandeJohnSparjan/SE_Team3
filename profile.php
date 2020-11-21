@@ -132,7 +132,7 @@ $get_frnd_num = $friend_obj->get_all_friends($_SESSION['user_id'], false);
 					{ 
 						die("ERROR: Could not connect. ".$mysqli->connect_error); 
 					}
-			?> 
+			?>
             <div class="usersWrapper">
                 <?php
                 if($all_users){
@@ -157,10 +157,12 @@ $get_frnd_num = $friend_obj->get_all_friends($_SESSION['user_id'], false);
 							if($total_balance<0)
 							{
 								echo '<div class="user_info">' .' You owe '.$user2.':  '. $total_balance*-1;
+                                echo '</div></div><br></br>';
 							}
-					if($total_balance>0)
+					        elseif($total_balance>0)
 							{
 								echo '<div class="user_info">'.$user2 .' owes you:  '. $total_balance;
+                                echo '</div></div><br></br>';
 							}
 							
 //						    echo "Balance: ".$total_balance."<br>";
@@ -169,7 +171,7 @@ $get_frnd_num = $friend_obj->get_all_friends($_SESSION['user_id'], false);
 //                            echo $row->username;
 //							echo " &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp You are settled up";
 //						}
-								echo '</div><br></br>';
+
 								
                     }
                 }
