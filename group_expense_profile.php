@@ -142,7 +142,8 @@ $get_frnd_num = $friend_obj->get_all_friends($_SESSION['user_id'], false);
                                     echo '</td>
                                     </tr>
                                     <tr>
-                                       td><a href="group_expense_update.php" name="submit" >Update</td>
+                                       <td><a href="group_expense_update.php" name="submit" >Update</td>
+                                       <td><span><a href="group_expense_update.php?id=' . $item->expense_name . '" class="see_profileBtn">Update</a></span></td>
                                     </tr>
                                     
 </table>

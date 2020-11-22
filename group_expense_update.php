@@ -18,10 +18,32 @@ if(isset($_SESSION['user_id']) && isset($_SESSION['email'])){
 //        }
     }
 
-    //inserting group expense data
-    if(isset($_POST['expense_name']) && isset($_POST['description']) && isset($_POST['amount'])){
-        $result = $group_obj->groupExpense($_GET['id'],$_POST['expense_name'], $_POST['description'],$_POST['amount'],$_POST['name'],$user_data->username);
+    if(isset($_GET['id'])){
+        //$group_data = $group_obj->find_group_members($_GET['id']);
+        $expense_name = $_GET['id'];
+        $group_expense_data = $group_obj->find_group_expenses($_GET['id']);
+        foreach ($group_expense_data as $row){
+            if($row->expense_name === $_GET['id']){
+                $group_data = $group_obj->find_group_expense_members($row->expense_name);
+                $group_name = $group_obj->groupName($row->group_id);
+            }
+        }
+
+
+//        if($group_data===false){
+//            header('Location: profile.php');
+//            exit;
+//        }
     }
+
+    //inserting group expense data
+
+    if( isset($_POST['description']) && isset($_POST['amount']) && isset($_POST['name'])){
+        $result = $group_obj->updateGroupExpense($_GET['id'], $_POST['description'],$_POST['amount'],$_POST['name'],$user_data->username);
+    }
+    
+
+
 }
 else{
     header('Location: logout.php');
@@ -101,13 +123,13 @@ $get_frnd_num = $friend_obj->get_all_friends($_SESSION['user_id'], false);
                     <div class="form-group">
                         <form action="" method="POST" name="add_name" id="add_name">
                             <div class="table-responsive">
-                                <table><tr><th>Create Group Expense</th></tr></table>
+                                <table><tr><th>Update Group Expense</th></tr></table>
 
                                 <table class="table table-bordered" id="dynamic_field">
 
                                     <tr>
                                         <td> <label for="expense_name">Expense name:</label></td>
-                                        <td><input type="text" name="expense_name" placeholder="Enter Group Name" value="king" disabled></td>
+                                        <td><input type="text" name="expense_name" placeholder="Enter Group Name" value="<?php echo $expense_name?>" disabled></td>
                                     </tr>
                                     <tr>
                                         <td><label for="description">Description: </label></td>
@@ -156,38 +178,10 @@ $get_frnd_num = $friend_obj->get_all_friends($_SESSION['user_id'], false);
 
             </div>
             <div class="col">
-                <div class="profile_container">
-                    <div class="all_users">
-                        <h4>Group Members</h4>
-                        <?php
-                        if($all_users){
-                            foreach ($group_data as $item) {
-                                foreach ($all_users as $row) {
-                                    if ($row->username === $item) {
-                                        $uid = $row->id;
-                                    } elseif ($uname === $item) {
-                                        $uid = $user_data->id;
-                                    }
 
-                                }
-
-                                echo '<div class="user_box">
-                                 <div class="user_info"><span>'.$item.'</span></div>';
-                                if($uname !== $item){
-                                    echo '<span><a href="user_profile.php?id='.$uid.'" class="see_profileBtn">See Profile</a></span>
-                               </div>';
-                                }
-                                elseif ($uname === $item){
-                                    echo '</div>';
-                                }
-
-                            }
-                        }
-                        ?>
-                    </div>
 
                     <div class="all_users">
-                        <h4>Group Expenses</h4>
+                        <h4>Current Expense</h4>
                         <?php
                         if($group_expense_data) {
                             foreach ($group_expense_data as $item) {

@@ -292,4 +292,58 @@ class Group
             die($errMsg->getMessage());
         }
     }
+
+    function updateGroupExpense($group_exp_name, $description, $amount, $name, $paidBy)
+    {
+        try {
+            $this->groupExpName = trim($group_exp_name);
+            $this->description = trim($description);
+            $this->amount = trim($amount);
+            $this->groupMembers = $name;
+            $this->paidBy = $paidBy;
+
+            //number of group member inputs
+            $number = count($_POST["name"]);
+
+            //all the members who go into groups
+            $groupsExp = [];
+            for ($i = 0; $i < $number; $i++) {
+                if (trim($_POST["name"][$i] != '')) {
+                    //$sql = "INSERT INTO tbl_name(name) VALUES('".mysqli_real_escape_string($connect, $_POST["name"][$i])."')";
+                    //mysqli_query($connect, $sql);
+                    array_push($groupsExp, $this->groupMembers[$i]);
+                }
+            }
+
+            //converting array to string
+            $groups_values = implode(",", $groupsExp);
+
+            if (!empty($this->description) && !empty($this->amount)) {
+                {
+                    //UPDATE `group_expense` SET `expense_name` = 'nimmaa', `description` = 'nimmaaaa1', `amount` = '50000', `grp_members` = 'JohnSS,js1837,root' WHERE `group_expense`.`id` = 106;
+                    $sql="UPDATE group_expense SET  description = '$description', amount = '$amount', grp_members='$groups_values' WHERE expense_name = ?";
+                    //$sql = "INSERT INTO group_expense (group_id,expense_name,description,amount,grp_members,paid_by) VALUES (:group_id,:expense_name,:description,:amount,:grp_members,:paid_by)";
+
+                    $register_stmt = $this->db->prepare($sql);
+                    //$register_stmt->bindValue(':group_id', $groupId, PDO::PARAM_INT);
+                    //$register_stmt->bindValue(':expense_name', $this->groupExpName, PDO::PARAM_STR);
+//                    $register_stmt->bindValue(':description', $this->description, PDO::PARAM_STR);
+//                    $register_stmt->bindValue(':amount', $this->amount, PDO::PARAM_INT);
+//                    $register_stmt->bindValue(':grp_members', $groups_values, PDO::PARAM_STR);
+//                    $register_stmt->bindValue(':paid_by', $this->paidBy, PDO::PARAM_STR);
+
+                    $register_stmt->execute([$this->groupExpName]);
+
+
+                    return ['successMessage' => 'Expense updated successfully.'];
+                }
+
+            } else {
+                return ['errorMessage' => 'Please fill all fields.'];
+            }
+        } catch (PDOException $errorMsg) {
+            die($errorMsg->getMessage());
+
+        }
+    }
 }
