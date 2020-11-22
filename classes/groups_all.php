@@ -184,7 +184,7 @@ class Group
             $number = count($_POST["name"]);
 
             //all the members who go into groups
-            $groupsExp = [$this->paidBy];
+            $groupsExp = [];
             for ($i = 0; $i < $number; $i++) {
                 if (trim($_POST["name"][$i] != '')) {
                     //$sql = "INSERT INTO tbl_name(name) VALUES('".mysqli_real_escape_string($connect, $_POST["name"][$i])."')";

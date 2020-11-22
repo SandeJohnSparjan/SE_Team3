@@ -141,6 +141,9 @@ $get_frnd_num = $friend_obj->get_all_friends($_SESSION['user_id'], false);
                                         }
                                     echo '</td>
                                     </tr>
+                                    <tr>
+                                       td><a href="group_expense_update.php" name="submit" >Update</td>
+                                    </tr>
                                     
 </table>
 </div>

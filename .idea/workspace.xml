@@ -4,8 +4,7 @@
     <list default="true" id="c9be299a-1145-48bb-984b-fff530f2defd" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/classes/groups_all.php" beforeDir="false" afterPath="$PROJECT_DIR$/classes/groups_all.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/groups_expense.php" beforeDir="false" afterPath="$PROJECT_DIR$/groups_expense.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/profile.php" beforeDir="false" afterPath="$PROJECT_DIR$/profile.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/group_expense_profile.php" beforeDir="false" afterPath="$PROJECT_DIR$/group_expense_profile.php" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -91,7 +90,8 @@
       <workItem from="1605770778736" duration="7795000" />
       <workItem from="1605802423118" duration="3601000" />
       <workItem from="1605827910836" duration="1975000" />
-      <workItem from="1605926244862" duration="8038000" />
+      <workItem from="1605926244862" duration="8634000" />
+      <workItem from="1606013715625" duration="2665000" />
     </task>
     <servers />
   </component>
@@ -103,14 +103,14 @@
       <screen x="0" y="0" width="1536" height="824" />
     </state>
     <state x="499" y="159" key="#com.intellij.refactoring.safeDelete.UnsafeUsagesDialog/0.0.1536.824@0.0.1536.824" timestamp="1604357340938" />
-    <state x="988" y="339" key="NewPhpFileDialog" timestamp="1605930108296">
+    <state x="988" y="339" key="NewPhpFileDialog" timestamp="1606014224602">
       <screen x="0" y="0" width="1536" height="824" />
     </state>
-    <state x="988" y="339" key="NewPhpFileDialog/0.0.1536.824@0.0.1536.824" timestamp="1605930108296" />
-    <state x="401" y="257" key="com.intellij.ide.util.TipDialog" timestamp="1605926521288">
+    <state x="988" y="339" key="NewPhpFileDialog/0.0.1536.824@0.0.1536.824" timestamp="1606014224602" />
+    <state x="401" y="257" key="com.intellij.ide.util.TipDialog" timestamp="1606013800818">
       <screen x="0" y="0" width="1536" height="824" />
     </state>
-    <state x="401" y="257" key="com.intellij.ide.util.TipDialog/0.0.1536.824@0.0.1536.824" timestamp="1605926521288" />
+    <state x="401" y="257" key="com.intellij.ide.util.TipDialog/0.0.1536.824@0.0.1536.824" timestamp="1606013800818" />
     <state x="425" y="187" key="run.anything.popup" timestamp="1604729884063">
       <screen x="0" y="0" width="1536" height="824" />
     </state>
