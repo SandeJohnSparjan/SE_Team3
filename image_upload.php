@@ -30,7 +30,28 @@ if (isset($_POST['submit'])) {
     $con = mysqli_connect("localhost", "root", "", "easyroommate");
     $q = mysqli_query($con, "UPDATE users SET user_image = '" . $_FILES['file']['name'] . "' WHERE id = '" . $_SESSION['user_id'] . "'");
 //    $upload_image = $user_obj->upload_image($_SESSION['user_id'], false);
+    if($q){
+        header('Location: image_upload.php');
+        exit;
+    }
 }
+
+if(isset($_POST['submit2']))
+{
+    $mysqli = new mysqli("localhost", "root", "", "easyroommate");
+    if ($mysqli ==false)
+    {
+        die("ERROR: Could not connect. ".$mysqli->connect_error);
+    }
+    $userid = $user_data->id;
+    $username=$_POST['new_username'];
+    $update = mysqli_query($mysqli, "UPDATE users SET username='$username' WHERE id='$userid'");
+    if($update){
+        header('Location: image_upload.php');
+        exit;
+    }
+}
+
 ?>
 
 <!DOCTYPE html>
@@ -65,7 +86,7 @@ if (isset($_POST['submit'])) {
                 <li><a href="groups_create.php" rel="noopener noreferrer">Groups</a></li>
 
                 <button class="btn dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                    Edit
+                    More
                 </button>
                 <div class="dropdown-menu" aria-labelledby="navbarDropdown">
                     <a class="dropdown-item" href="notifications.php" rel="noopener noreferrer">Requests<span class="badge <?php
@@ -74,15 +95,27 @@ if (isset($_POST['submit'])) {
                         }
                         ?>"><?php echo $get_req_num;?></span></a>
                     <a class="dropdown-item" href="friends.php" rel="noopener noreferrer">Friends<span class="badge"><?php echo $get_frnd_num;?></span></a>
-                    <a class="dropdown-item" href="image_upload.php" rel="noopener noreferrer">Change Pic</a>
+                    <a class="dropdown-item" href="image_upload.php" rel="noopener noreferrer">Edit Profile</a>
                     <a class="dropdown-item" href="logout.php" rel="noopener noreferrer">Logout</a>
                 </div>
             </ul>
         </nav>
+
+
+    <div class="inner_profile">
+
+        <label><b> Change Your Username</b></label>
+        <form action="" method="post" enctype="multipart/form-data">
+            <input type="text" name="new_username" placeholder="Enter new username">
+            <input type="submit" name="submit2" value="Change"><br><br>
+        </form>
+
+    </div>
 <div class="inner_profile">
+    <label><b> Change User Image</b></label>
     <form action="" method="post" enctype="multipart/form-data">
         <input type="file" name="file" placeholder="Upload a file">
-        <input type="submit" name="submit"><br><br>
+        <input type="submit" name="submit" value="Change"><br><br>
 		<label> Image dimensions should be less than 600x800 pixels </label>
     </form>
 
@@ -97,47 +130,5 @@ if (isset($_POST['submit'])) {
 
 
 
-<?php
-//    require 'includes/init.php';
-//    if(isset($_SESSION['user_id']) && isset($_SESSION['email'])) {
-//        if (isset($_POST['submit'])) {
-//            move_uploaded_file($_FILES['file']['tmp_name'], "profile_images/" . $_FILES['file']['name']);
-//            $con = mysqli_connect("localhost", "root", "", "easyroommate");
-//            $q = mysqli_query($con, "UPDATE users SET user_image = '" . $_FILES['file']['name'] . "' WHERE id = '" . $_SESSION['user_id'] . "'");
-//        }
-//    }
-//?>
-
-<!--<!DOCTYPE html>-->
-<!--<html>-->
-<!--    <head>-->
-<!---->
-<!--    </head>-->
-<!--    <body>-->
-<!--        <form action="" method="post" enctype="multipart/form-data">-->
-<!--            <input type="file" name="file">-->
-<!--            <input type="submit" name="submit">-->
-<!--        </form>-->
-<!---->
-<!---->
-<!--<?php
-        if($q){
-            header('Location: profile.php');
-            exit;
-        }
-////            $con = mysqli_connect("localhost","root","","easyroommate");
-////            $q = mysqli_query($con,"SELECT * FROM users");
-////            while($row = mysqli_fetch_assoc($q)){
-////                echo $row['username'];
-////                if($row['user_image'] == ""){
-////                    echo "<img width='100' height='100' src='profile_images/default.jpg' alt='Default Profile Pic'>";
-////                } else {
-////                    echo "<img width='100' height='100' src='profile_images/".$row['user_image']."' alt='Profile Pic'>";
-////                }
-////                echo "<br>";
-////            }
-////        ?>
-  </body>-->
-<!--</html>-->
 
 

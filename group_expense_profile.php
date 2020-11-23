@@ -86,7 +86,7 @@ $get_frnd_num = $friend_obj->get_all_friends($_SESSION['user_id'], false);
             <li><a href="groups_create.php" rel="noopener noreferrer">Groups</a></li>
 
             <button class="btn dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                Edit
+                More
             </button>
             <div class="dropdown-menu" aria-labelledby="navbarDropdown">
                 <a class="dropdown-item" href="notifications.php" rel="noopener noreferrer">Requests<span class="badge <?php
@@ -96,7 +96,7 @@ $get_frnd_num = $friend_obj->get_all_friends($_SESSION['user_id'], false);
                     }
                     ?>"><?php echo $get_req_num;?></span></a>
                 <a class="dropdown-item" href="friends.php" rel="noopener noreferrer">Friends<span class="badge"><?php echo $get_frnd_num;?></span></a>
-                <a class="dropdown-item" href="image_upload.php" rel="noopener noreferrer">Change Pic</a>
+                <a class="dropdown-item" href="image_upload.php" rel="noopener noreferrer">Edit Profile</a>
                 <a class="dropdown-item" href="logout.php" rel="noopener noreferrer">Logout</a>
             </div>
         </ul>

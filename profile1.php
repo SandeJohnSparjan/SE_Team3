@@ -55,12 +55,12 @@ $get_frnd_num = $friend_obj->get_all_friends($_SESSION['user_id'], false);
         <ul>
             <li><a href="profile.php" rel="noopener noreferrer" class="active" >Home</a></li>
 
-            <li><a href="expense11.php" rel="noopener noreferrer">Add an Expense</a></li>
-            <li><a href="balance.php" rel="noopener noreferrer">Balance</a></li>
+            <li><a href="expense.php" rel="noopener noreferrer">Add an Expense</a></li>
+            <li><a href="activity.php" rel="noopener noreferrer">Activity</a></li>
             <li><a href="groups_create.php" rel="noopener noreferrer">Groups</a></li>
 
             <button class="btn dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                Edit
+                More
             </button>
             <div class="dropdown-menu" aria-labelledby="navbarDropdown">
                 <a class="dropdown-item" href="notifications.php" rel="noopener noreferrer">Requests<span class="badge <?php
@@ -69,7 +69,7 @@ $get_frnd_num = $friend_obj->get_all_friends($_SESSION['user_id'], false);
                     }
                     ?>"><?php echo $get_req_num;?></span></a>
                 <a class="dropdown-item" href="friends.php" rel="noopener noreferrer">Friends<span class="badge"><?php echo $get_frnd_num;?></span></a>
-                <a class="dropdown-item" href="image_upload.php" rel="noopener noreferrer">Change Pic</a>
+                <a class="dropdown-item" href="image_upload.php" rel="noopener noreferrer">Edit Profie</a>
                 <a class="dropdown-item" href="logout.php" rel="noopener noreferrer">Logout</a>
             </div>
         </ul>
@@ -119,15 +119,42 @@ $get_frnd_num = $friend_obj->get_all_friends($_SESSION['user_id'], false);
 
                                                             if($total_balance<0)
                                                             {
-                                                                echo '<div class="user_info">' .' You owe '.$user2.':  '. $total_balance*-1;
+                                                                echo '<div class="user_info">' .' You owe '.$user2.':  $'. $total_balance*-1;
 
                                                             }
                                                             if($total_balance>0)
                                                             {
-                                                                echo '<div class="user_info">'.$user2 .' owes you:  '. $total_balance.'</div>';
+                                                                echo '<div class="user_info">'.$user2 .' owes you:  $'. $total_balance;
 
 
                                                             }
+															if($total_balance)
+								{
+									echo '&nbsp <form action="" method="post" enctype="multipart/form-data">
+											<br><input type="submit" name="settleup" value="settle up">
+											 <input type="hidden" name="user2" value='.$user2.'><br><br>';
+											//echo $user2;
+											echo '</form>';
+										echo'</div></div><br>';	
+									
+									if(isset($_POST['settleup']))
+									{
+										$mysqli = new mysqli("localhost", "root", "", "easyroommate"); 
+										if ($mysqli ==false) 
+										{ 
+											die("ERROR: Could not connect. ".$mysqli->connect_error); 
+										}
+										
+											//echo "<script> alert('Expense succesfully settled up'); </script>";
+											$username=$user_data->username;
+											$user2= $_POST['user2'];
+										//echo $user2;
+										$settle1 = mysqli_query($mysqli, "DELETE FROM expense WHERE user1='$user2' and user2='$username' ");
+										$settle2 = mysqli_query($mysqli, "DELETE FROM expense WHERE user1='$username' and user2='$user2'");
+										//echo "<script> alert('You are succesfully settled up'); </script>";
+										 header('Location: profile.php');
+									}
+								}
 
 //						    echo "Balance: ".$total_balance."<br>";
                                                         }

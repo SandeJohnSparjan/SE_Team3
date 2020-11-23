@@ -9,6 +9,10 @@ if(isset($_SESSION['user_id']) && isset($_SESSION['email'])){
 
     // fetch all users except me
     $all_users = $user_obj->all_users($_SESSION['user_id']);
+
+    //fetching expenses
+    $all_expenses = $expenses_obj->expensesRetrieval($user_data->username);
+
 }
 else{
     header('Location: logout.php');
@@ -17,13 +21,14 @@ else{
 
 //expense button
 if(isset($_POST['submit'])) {
-    if (isset($_POST['description']) && isset($_POST['paid_by']) && isset($_POST['share_with']) && isset($_POST['amount'])) {
-        $result = $expenses_obj->insertExpense($_POST['description'], $_POST['paid_by'], $_POST['share_with'], $_POST['amount']);
+    if (isset($_POST['description'])  && isset($_POST['share_with']) && isset($_POST['amount']) && isset($_POST['split'])) {
+        $result = $expenses_obj->insertExpense($_POST['description'], $user_data->username, $_POST['share_with'], $_POST['amount'], $_POST['split']);
 
     } else {
         $result['errorMessage'] = 'Fields are filled.';
     }
 }
+
 
 
 
@@ -75,7 +80,7 @@ $get_all_friends = $friend_obj->get_all_friends($_SESSION['user_id'], true);
                 <li><a href="groups_create.php" rel="noopener noreferrer">Groups</a></li>
 
                 <button class="btn dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                    Edit
+                    More
                 </button>
                 <div class="dropdown-menu" aria-labelledby="navbarDropdown">
                     <a class="dropdown-item" href="notifications.php" rel="noopener noreferrer">Requests<span class="badge <?php
@@ -84,7 +89,7 @@ $get_all_friends = $friend_obj->get_all_friends($_SESSION['user_id'], true);
                         }
                         ?>"><?php echo $get_req_num;?></span></a>
                     <a class="dropdown-item" href="friends.php" rel="noopener noreferrer">Friends<span class="badge"><?php echo $get_frnd_num;?></span></a>
-                    <a class="dropdown-item" href="image_upload.php" rel="noopener noreferrer">Change Pic</a>
+                    <a class="dropdown-item" href="image_upload.php" rel="noopener noreferrer">Edit Profile</a>
                     <a class="dropdown-item" href="logout.php" rel="noopener noreferrer">Logout</a>
                 </div>
             </ul>
@@ -96,50 +101,52 @@ $get_all_friends = $friend_obj->get_all_friends($_SESSION['user_id'], true);
                 <div class="col">
                     <div class="login_signup_container groups_container" >
                         <div class="form-group">
-                            <form action="" method="POST" name="add_name" id="add_name">
+                            <form action="" method="POST">
+
                                 <div class="table-responsive">
-                                    <table><tr><th>Create An Expense</th></tr></table>
+                                    <center><table><tr><th>Add an Expense</th></tr></table></center>
 
-                                    <table class="table table-bordered" id="dynamic_field">
+                                    <table class="table table-bordered" id="dynamic_field"">
 
-                                        <tr>
-                                            <td><label for="description">Description:</label></td>
-                                            <td><input type="text" name="description"  required /> </td>
-                                        </tr>
-                                        <tr>
-                                            <td><label for="paid_by">
-                                                    Paid By: </label>
-                                               </td>
-                                            <td> <select name='paid_by' id='paid_by'>
+                                    <tr>
+                                        <td> <label for="description">Description:</label>
+                                            <input type="text" name="description" placeholder="Enter Description"></td>
+                                    </tr>
+                                    <tr>
+                                        <td><label for="paid_by">With you and :
+                                                <select name='share_with' id='share_with'>
                                                     <?php
-                                                    echo '<option id="user1">'.$user_data->username.'</option>';
+                                                    //echo '<option id="user2">'.$user_data->username.'</option>';
                                                     foreach ($get_all_friends as $row){
                                                         echo '<option>'.$row->username.'</option>';
                                                     }?>
-                                                </select></td>
-                                        </tr>
-                                        <tr>
-                                            <td><label for="share_with">Share with: </label>
-                                                </td>
-                                            <td><select name='share_with' id='share_with'>
-                                                    <?php
-                                                    echo '<option value="" disabled selected>Select User</option>';
-                                                    foreach ($get_all_friends as $row){
-                                                        echo '<option>'.$row->username.'</option>';
-                                                    }?>
-                                                </select></td>
-                                        </tr>
+                                                </select></label></td>
 
-                                        <tr>
-                                            <td><label for="amount">Amount:</label></td>
-                                            <td><input type="text" name="amount" required /></td>
-                                        </tr>
+                                    </tr>
+
+                                    <tr><td><label for="amount">Amount: </label></td></tr>
+                                    <tr>
+                                        <td><input type="text" name="amount" placeholder="Enter amount" class="form-control name_list" required></td>
+
+                                    </tr>
+
+                                    <tr><td>	<label for="split_type">Split Type: </label><br>
+                                            <input type="radio" id="you_equally" name="split" value="you_equally">
+                                            <label for="you_equally">Paid by you and Share Equally</label><br>
+                                            <input type="radio" id="them_equally" name="split" value="them_equally">
+                                            <label for="them_equally">Paid by them and Share Equally</label><br>
+                                            <input type="radio" id="they_owe" name="split" value="they_owe">
+                                            <label for="they_owe">They owe you completely</label><br>
+                                            <input type="radio" id="you_owe" name="split" value="you_owe">
+                                            <label for="you_owe">you owe them completely</label></td></tr>
+
 
                                     </table>
-                                    <input type="submit" name="submit" id="submit" class="btn btn-info" value="Submit" />
-                                </div>
+                                    <input type="submit" name="submit" value="Submit" />
 
+                                </div>
                             </form>
+
                             <div>
                                 <?php
                                 if(isset($result['errorMessage'])){
@@ -159,7 +166,24 @@ $get_all_friends = $friend_obj->get_all_friends($_SESSION['user_id'], true);
                 <div class="col">
                     <div class="profile_container">
                         <div class="all_users">
+                            <h4>All expenses: </h4><br>
+                            <?php
+                            if($all_expenses){
+                                foreach ($all_expenses as $row){
+                                    echo '<div class="user_box">
+                                <div class="user_info"><span>'.$row->exp_name.'</span></div> 
+                                    <div class="user_info"><span><a href="expense_profile.php?id='.$row->id.'" class="see_profileBtn">View</a></span></div>
+                            </div>';
 
+                                }
+                            }
+                            else{
+                                echo '<div class="user_box">
+                                <div class="user_info"><span>No Expenses</span></div></div> ';
+                            }
+
+
+                            ?>
                         </div>
                     </div>
                 </div>
