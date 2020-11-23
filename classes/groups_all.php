@@ -182,7 +182,7 @@ class Group
 
             //number of group member inputs
             $number = count($_POST["name"]);
-
+            $eachPay = $this->amount / ($number+1);
             //all the members who go into groups
             $groupsExp = [];
             for ($i = 0; $i < $number; $i++) {
@@ -204,7 +204,7 @@ class Group
                     return ['errorMessage' => 'This group expense name already exists!! Try another one!'];
                 } else {
 
-                    $sql = "INSERT INTO group_expense (group_id,expense_name,description,amount,grp_members,paid_by) VALUES (:group_id,:expense_name,:description,:amount,:grp_members,:paid_by)";
+                    $sql = "INSERT INTO group_expense (group_id,expense_name,description,amount,grp_members,paid_by,eachPay) VALUES (:group_id,:expense_name,:description,:amount,:grp_members,:paid_by,:eachPay)";
 
                     $register_stmt = $this->db->prepare($sql);
                     $register_stmt->bindValue(':group_id', $groupId, PDO::PARAM_INT);
@@ -213,6 +213,7 @@ class Group
                     $register_stmt->bindValue(':amount', $this->amount, PDO::PARAM_INT);
                     $register_stmt->bindValue(':grp_members', $groups_values, PDO::PARAM_STR);
                     $register_stmt->bindValue(':paid_by', $this->paidBy, PDO::PARAM_STR);
+                    $register_stmt->bindValue(':eachPay', $eachPay, PDO::PARAM_INT);
 
                     $register_stmt->execute();
 
@@ -232,7 +233,7 @@ class Group
     function find_group_expense($groupId){
         try{
 
-            $get_expenses = $this->db->prepare("SELECT group_id,expense_name,description,amount,paid_by FROM group_expense WHERE group_id = ?");
+            $get_expenses = $this->db->prepare("SELECT group_id,expense_name,description,amount,paid_by,eachPay FROM group_expense WHERE group_id = ?");
             $get_expenses->execute([$groupId]);
             if($get_expenses->rowCount() >0){
                 $get_all_expenses = $get_expenses->fetchAll(PDO::FETCH_OBJ);
@@ -250,7 +251,7 @@ class Group
     function find_group_expenses($exName){
         try{
 
-            $get_expenses = $this->db->prepare("SELECT group_id,expense_name,description,amount,paid_by FROM group_expense WHERE expense_name = ?");
+            $get_expenses = $this->db->prepare("SELECT group_id,expense_name,description,amount,paid_by,eachPay FROM group_expense WHERE expense_name = ?");
             $get_expenses->execute([$exName]);
             if($get_expenses->rowCount() >0){
                 $get_all_expenses = $get_expenses->fetchAll(PDO::FETCH_OBJ);
@@ -305,8 +306,9 @@ class Group
             //number of group member inputs
             $number = count($_POST["name"]);
 
+            $eachPay = $this->amount / ($number+1);
             //all the members who go into groups
-            $groupsExp = [];
+            $groupsExp = [$paidBy];
             for ($i = 0; $i < $number; $i++) {
                 if (trim($_POST["name"][$i] != '')) {
                     //$sql = "INSERT INTO tbl_name(name) VALUES('".mysqli_real_escape_string($connect, $_POST["name"][$i])."')";
@@ -321,16 +323,11 @@ class Group
             if (!empty($this->description) && !empty($this->amount)) {
                 {
                     //UPDATE `group_expense` SET `expense_name` = 'nimmaa', `description` = 'nimmaaaa1', `amount` = '50000', `grp_members` = 'JohnSS,js1837,root' WHERE `group_expense`.`id` = 106;
-                    $sql="UPDATE group_expense SET  description = '$description', amount = '$amount', grp_members='$groups_values' WHERE expense_name = ?";
+                    $sql="UPDATE group_expense SET  description = '$description', amount = '$amount', grp_members='$groups_values', eachPay = '$eachPay' WHERE expense_name = ?";
                     //$sql = "INSERT INTO group_expense (group_id,expense_name,description,amount,grp_members,paid_by) VALUES (:group_id,:expense_name,:description,:amount,:grp_members,:paid_by)";
 
                     $register_stmt = $this->db->prepare($sql);
-                    //$register_stmt->bindValue(':group_id', $groupId, PDO::PARAM_INT);
-                    //$register_stmt->bindValue(':expense_name', $this->groupExpName, PDO::PARAM_STR);
-//                    $register_stmt->bindValue(':description', $this->description, PDO::PARAM_STR);
-//                    $register_stmt->bindValue(':amount', $this->amount, PDO::PARAM_INT);
-//                    $register_stmt->bindValue(':grp_members', $groups_values, PDO::PARAM_STR);
-//                    $register_stmt->bindValue(':paid_by', $this->paidBy, PDO::PARAM_STR);
+
 
                     $register_stmt->execute([$this->groupExpName]);
 
@@ -341,6 +338,61 @@ class Group
             } else {
                 return ['errorMessage' => 'Please fill all fields.'];
             }
+        } catch (PDOException $errorMsg) {
+            die($errorMsg->getMessage());
+
+        }
+    }
+
+    function settleGroupExpense($group_exp_name,$grpID)
+    {
+        try {
+            $this->groupExpName = trim($group_exp_name);
+
+            $sql="DELETE FROM group_expense WHERE expense_name = ?";
+
+            $register_stmt = $this->db->prepare($sql);
+
+            $register_stmt->execute([$this->groupExpName]);
+
+            header('Location: groups_expense.php?id='.$grpID.'');
+
+
+        } catch (PDOException $errorMsg) {
+            die($errorMsg->getMessage());
+
+        }
+    }
+
+    function settleGroupExpenseNonPaid($group_exp_name,$groupData,$uname,$grpID)
+    {
+        try {
+            $this->groupExpName = trim($group_exp_name);
+
+            $groupsExp = [];
+
+
+
+
+            foreach ($groupData as $i){
+                if($uname !== $i){
+                    array_push($groupsExp, $i);
+                }
+            }
+            //converting array to string
+            $groups_values = implode(",", $groupsExp);
+
+            $sql="UPDATE group_expense SET grp_members='$groups_values' WHERE expense_name = ?";
+            //$sql = "INSERT INTO group_expense (group_id,expense_name,description,amount,grp_members,paid_by) VALUES (:group_id,:expense_name,:description,:amount,:grp_members,:paid_by)";
+
+            $register_stmt = $this->db->prepare($sql);
+
+
+            $register_stmt->execute([$this->groupExpName]);
+            header('Location: groups_expense.php?id='.$grpID.'');
+
+
+
         } catch (PDOException $errorMsg) {
             die($errorMsg->getMessage());
 

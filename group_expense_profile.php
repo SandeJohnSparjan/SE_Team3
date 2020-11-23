@@ -11,6 +11,8 @@ if(isset($_SESSION['user_id']) && isset($_SESSION['email'])){
     if(isset($_GET['id'])){
         //$group_data = $group_obj->find_group_members($_GET['id']);
         $group_expense_data = $group_obj->find_group_expenses($_GET['id']);
+
+        $youGet =  $group_expense_data[0]->amount - $group_expense_data[0]->eachPay;
         foreach ($group_expense_data as $row){
             if($row->expense_name === $_GET['id']){
                 $group_data = $group_obj->find_group_expense_members($row->expense_name);
@@ -139,11 +141,29 @@ $get_frnd_num = $friend_obj->get_all_friends($_SESSION['user_id'], false);
                                         echo '<div class="user_box">
                                          <div class="user_info"><span>'.$row.'</span></div></div>';
                                         }
-                                    echo '</td>
+                                    if($item->paid_by === $user_data->username){
+                                        echo '</td>
                                     </tr>
                                     <tr>
-                                       <td><a href="group_expense_update.php" name="submit" >Update</td>
-                                       <td><span><a href="group_expense_update.php?id=' . $item->expense_name . '" class="see_profileBtn">Update</a></span></td>
+                                        <td><label for="youOwe">You Get:</label></td>
+                                        <td><div class="user_info"><span> '.$youGet.' </span></div></td>
+                                    </tr>';
+                                    }
+                                    else{
+                                        echo '</td>
+                                    </tr>
+                                    <tr>
+                                        <td><label for="youOwe">You Owe:</label></td>
+                                        <td><div class="user_info"><span>'.$item->eachPay.'</span></div></td>
+                                    </tr>';
+                                    }
+
+
+
+                                    echo'
+                                    <tr>
+                                       <td><span><a href="group_expense_settle.php?id=' . $item->expense_name . '" class="see_profileBtn">Settle Up</a></span>
+                                       <span><a href="group_expense_update.php?id=' . $item->expense_name . '" class="see_profileBtn">Update</a></span></td>
                                     </tr>
                                     
 </table>

@@ -22,6 +22,8 @@ if(isset($_SESSION['user_id']) && isset($_SESSION['email'])){
         //$group_data = $group_obj->find_group_members($_GET['id']);
         $expense_name = $_GET['id'];
         $group_expense_data = $group_obj->find_group_expenses($_GET['id']);
+        $youGet =  $group_expense_data[0]->amount - $group_expense_data[0]->eachPay;
+
         foreach ($group_expense_data as $row){
             if($row->expense_name === $_GET['id']){
                 $group_data = $group_obj->find_group_expense_members($row->expense_name);
@@ -36,12 +38,22 @@ if(isset($_SESSION['user_id']) && isset($_SESSION['email'])){
 //        }
     }
 
-    //Updating group expense data
+    //inserting group expense data
 
     if( isset($_POST['description']) && isset($_POST['amount']) && isset($_POST['name'])){
         $result = $group_obj->updateGroupExpense($_GET['id'], $_POST['description'],$_POST['amount'],$_POST['name'],$user_data->username);
     }
-    
+
+    if(isset($_POST['expense_name']) && isset($_POST['eachPay'])){
+        if($user_data->username === $group_expense_data[0]->paid_by){
+            $result = $group_obj->settleGroupExpense($_POST['expense_name'],$group_expense_data[0]->group_id);
+        }
+        else{
+            $result = $group_obj->settleGroupExpenseNonPaid($_POST['expense_name'],$group_data, $user_data->username,$group_expense_data[0]->group_id);
+
+        }
+    }
+
 
 
 }
@@ -123,45 +135,37 @@ $get_frnd_num = $friend_obj->get_all_friends($_SESSION['user_id'], false);
                     <div class="form-group">
                         <form action="" method="POST" name="add_name" id="add_name">
                             <div class="table-responsive">
-                                <table><tr><th>Update Group Expense</th></tr></table>
+                                <table><tr><th>Settle Group Expense</th></tr></table>
 
                                 <table class="table table-bordered" id="dynamic_field">
+                                    <?php
 
-                                    <tr>
-                                        <td> <label for="expense_name">Expense name:</label></td>
-                                        <td><input type="text" name="expense_name" placeholder="Enter Group Name" value="<?php echo $expense_name?>" disabled></td>
-                                    </tr>
-                                    <tr>
-                                        <td><label for="description">Description: </label></td>
-                                        <td><input type="text" name="description" placeholder="Expense Description"></td>
-                                    </tr>
-                                    <tr>
-                                        <td><label for="amount">Amount:</label></td>
-                                        <td><input type="text" name="amount" placeholder="Enter amount"></td>
-                                    </tr>
+                                    foreach ($group_expense_data as $item) {
+                                        echo '
+                                                                        <tr>
+                                                                            <td> <label for="expense_name">Expense name:</label></td>
+                                                                            <td><input type="text" name="expense_name" value="'.$item->expense_name.'" hidden> '.$item->expense_name.' </td>
+                                                                        </tr>';
 
-                                    <tr>
-                                        <td><label for="split_with">Split with:</label></td>
-                                        <td>
-                                            <?php
-                                            if($all_users){
-                                                foreach ($group_data as $item) {
-                                                    if($item !== $user_data->username) {
-                                                        echo '<input type="checkbox" id="' . $item . '" name="name[]" value="' . $item . '">
-                                                    <label for="' . $item . '"> ' . $item . '</label><br>';
-                                                    }
-                                                }
-                                            }
-                                            ?>
-
-                                        </td>
-
-                                    </tr>
-
+                                        if ($user_data->username === $item->paid_by) {
+                                            echo '<tr>
+                                                                            <td><label for="eachPay">Amount You Get: </label></td>
+                                                                            <td><input type="text" name="eachPay" value="'.$youGet.'" hidden>'.$youGet.'</td>
+                                                                        </tr>';
+                                        }
+                                        else{
+                                            echo '
+                                                                        <tr>
+                                                                            <td><label for="eachPay">Amount you owe:</label></td>
+                                                                            <td><input type="text" name="eachPay" value="'.$item->eachPay.'" hidden>'.$item->eachPay.'</td>
+                                                                        </tr>';
+                                        }
+                                    }
+                                    ?>
                                 </table>
 
                             </div>
-                            <input type="submit" name="submit" id="submit" class="btn btn-info" value="Update" />
+                            <input type="submit" name="submit" id="submit" class="btn btn-info" value="Settle Up" />
                         </form>
                         <div>
                             <?php
@@ -180,29 +184,29 @@ $get_frnd_num = $friend_obj->get_all_friends($_SESSION['user_id'], false);
             <div class="col">
 
 
-                    <div class="all_users">
-                        <h4>Current Expense</h4>
-                        <?php
-                        if($group_expense_data) {
-                            foreach ($group_expense_data as $item) {
-                                echo '<div class="user_box">
+                <div class="all_users">
+                    <h4>Current Expense</h4>
+                    <?php
+                    if($group_expense_data) {
+                        foreach ($group_expense_data as $item) {
+                            echo '<div class="user_box">
                                  <div class="user_info"><span>' . $item->expense_name . '</span></div>
                                  <span><a href="group_expense_profile.php?id=' . $item->expense_name . '" class="see_profileBtn">View</a></span></div>';
-                            }
                         }
-                        else{
-                            echo '<div class="user_box">
+                    }
+                    else{
+                        echo '<div class="user_box">
                                  <div class="user_info"><span>There are no expenses</span></div>
                                  
                                </div>';
-                        }
-                        ?>
-                    </div>
-
+                    }
+                    ?>
                 </div>
+
             </div>
         </div>
     </div>
+</div>
 </div>
 </body>
 </html>

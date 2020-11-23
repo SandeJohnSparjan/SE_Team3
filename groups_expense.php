@@ -7,18 +7,45 @@ if(isset($_SESSION['user_id']) && isset($_SESSION['email'])){
     }
 
     //getting username from URL and retrieving from SQL
-    if(isset($_GET['id'])){
+    if(isset($_GET['id'])) {
         $groupId = $_GET['id'];
         $group_data = $group_obj->find_group_members($_GET['id']);
         $group_expense_data = $group_obj->find_group_expense($_GET['id']);
+        $flag = false;
+        if ($group_expense_data) {
+            foreach ($group_expense_data as $row) {
+                if ($user_data->username === $row->paid_by) {
+                    $flag = true;
+                }
+            }
+            if (!$flag) {
+
+                foreach ($group_data as $j) {
+                    if ($j === $user_data->username) {
+                        $flag = true;
+
+                        break;
+                    } else {
+                        $flag = false;
+
+                        break;
+                    }
+                }
+
+            }
+        }
+    }
+
+
+
         $group_name = $group_obj->groupName($_GET['id']);
 //        if($group_data===false){
 //            header('Location: profile.php');
 //            exit;
 //        }
-    }
 
-    //inserting group expense data
+
+    //insert group expense data
     if(isset($_POST['expense_name']) && isset($_POST['description']) && isset($_POST['amount'])){
         $result = $group_obj->groupExpense($_GET['id'],$_POST['expense_name'], $_POST['description'],$_POST['amount'],$_POST['name'],$user_data->username);
     }
@@ -189,7 +216,7 @@ $get_frnd_num = $friend_obj->get_all_friends($_SESSION['user_id'], false);
                     <div class="all_users">
                         <h4>Group Expenses</h4>
                         <?php
-                            if($group_expense_data) {
+                            if($group_expense_data && $flag) {
                                 foreach ($group_expense_data as $item) {
                                     echo '<div class="user_box">
                                  <div class="user_info"><span>' . $item->expense_name . '</span></div>
@@ -198,7 +225,7 @@ $get_frnd_num = $friend_obj->get_all_friends($_SESSION['user_id'], false);
                             }
                             else{
                                 echo '<div class="user_box">
-                                 <div class="user_info"><span>There are no expenses</span></div>
+                                 <div class="user_info"><span>There are no expenses!</span></div>
                                  
                                </div>';
                             }
