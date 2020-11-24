@@ -9,7 +9,7 @@ if(isset($_POST['username']) && isset($_POST['email']) && isset($_POST['password
 }
 
 //user logged in already
-if(isset($_SESSION['email'])){
+if(isset($_SESSION['email']) ){
     header('Location: profile.php');
 }
 ?>

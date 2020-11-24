@@ -31,6 +31,7 @@ if(isset($_POST['submit'])) {
 
 if(isset($_GET['id'])){
     $get_expense = $expenses_obj->expenseRetrieval($_GET['id']);
+
 }
 
 
@@ -107,59 +108,53 @@ $get_all_friends = $friend_obj->get_all_friends($_SESSION['user_id'], true);
                         <form action="" method="POST">
 
                             <div class="table-responsive">
-                                <center><table><tr><th>Add an Expense</th></tr></table></center>
+                                <center><table><tr><th>Your Expense Details</th></tr></table></center>
 
                                 <table class="table table-bordered" id="dynamic_field"">
 
             <?php
-            foreach($get_expense as $item){
+
             echo'
                                 <tr>
                                     <td> <label for="description">Expense Name:</label>
-                                        <input type="text" name="description" value="'.$item->exp_name.'"></td>
+                                        <input type="text" name="description" value="'.$get_expense->exp_name.'" disabled></td>
                                 </tr>
-                                <tr>
-                                    <td>';
+                                ';
 
 
-            foreach ($get_all_friends as $row){
 
-                if($item->paid_by === $row->username){
+
+                if ($get_expense->user1 === $user_data->username) {
 
                     echo '<tr><td><label for="amount">Amount you get: </label></td></tr>
-                          <tr><input type="text" value="'..'"></tr>;
-                }
+                          <tr><td><input type="text" value="' . $get_expense->amount1 . '" disabled></td></tr>
+                          <tr><td><label for="name">From: </label></td></tr>
+                          <tr><td><input type="text" value="' . $get_expense->user2 . '" disabled></td></tr>';
+
+                } elseif ($get_expense->user2 === $user_data->username) {
+                    echo '<tr><td><label for="amount">Amount you owe: </label></td></tr>
+                          <tr><td><input type="text" value="' . $get_expense->amount2 . '" disabled> </td></tr>
+                          <tr><td><label for="name">To: </label></td></tr>
+                          <tr><td><input type="text" value="' . $get_expense->user1 . '" disabled></td></tr>';
+
+
+
+
             }
-                
-            }
 
-            echo '</select></label></td>
 
-                                </tr>
-
-                                <tr><td><label for="amount">Amount: </label></td></tr>
-                                <tr>
-                                    <td><input type="text" name="amount" placeholder="Enter amount" class="form-control name_list" required></td>
-
-                                </tr>
-
-                                <tr><td>	<label for="split_type">Split Type: </label><br>
-                                        <input type="radio" id="you_equally" name="split" value="you_equally">
-                                        <label for="you_equally">Paid by you and Share Equally</label><br>
-                                        <input type="radio" id="them_equally" name="split" value="them_equally">
-                                        <label for="them_equally">Paid by them and Share Equally</label><br>
-                                        <input type="radio" id="they_owe" name="split" value="they_owe">
-                                        <label for="they_owe">They owe you completely</label><br>
-                                        <input type="radio" id="you_owe" name="split" value="you_owe">
-                                        <label for="you_owe">you owe them completely</label></td></tr>';
+            echo '<tr>
+                                       <td><span><a href="expense.php" class="see_profileBtn">Go Back</a></span>
+                                       </td>
+                                    </tr>';
             ?>
 
 
                                 </table>
-                                <input type="submit" name="submit" value="Submit" />
+
 
                             </div>
-}
+
 
                         </form>
 

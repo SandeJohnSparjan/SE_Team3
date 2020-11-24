@@ -20,6 +20,16 @@ if(isset($_POST['fetch_btn'])) {
     $s_id = $_POST['get_email'];
 }
 
+//expense retrieval
+$get_expense = $expenses_obj->expenseRetrieval($_GET['id']);
+
+if($get_expense->user2 === $get_expense->paid_by){
+    $share_with1 = $get_expense->user2;
+}
+elseif($get_expense->user1 === $get_expense->paid_by){
+    $share_with1 = $get_expense->user1;
+}
+
 //requesting notification number
 $get_req_num = $friend_obj->req_notification($_SESSION['user_id'], false);
 //total friends
@@ -52,28 +62,41 @@ $mysqli = new mysqli("localhost", "root", "", "easyroommate");
 										
 								
 				?>
-<?php 				
-											if(@isset(_POST['submit']))
-												
-											{
-												$exp_id= $_POST['exp_id'];
-										$result = mysqli_query($mysqli, "SELECT * FROM expense WHERE id='$exp_id'");
+<?php
+
+if(isset($_POST['submit'])) {
+//    if(isset($_POST['description'])){
+//        echo 'description';
+//    }
+//    if(isset($_POST['amount'])){
+//        echo 'amount';
+//    }
+//    if(isset($_POST['share_with'])){
+//        echo 'share_with';
+//    }
+//    if(isset($_POST['split'])){
+//        echo 'split';
+//    }
+    if (isset($_POST['description'])  && isset($_POST['amount']) && isset($_POST['split'])) {
+
+												$exp_id= $_GET['id'];
+										        $result = mysqli_query($mysqli, "SELECT * FROM expense WHERE id='$exp_id'");
 											
-												$exp_name=$_POST['description'];
+												$exp_name=$get_expense->exp_name;
 												$amount=$_POST['amount'];
 												$split=$_POST['split'];
 												if($split=="you_equally")
 												{
 														$paid_by = $user_data->username;
 														$user1 = $user_data->username;
-														$user2 = $_POST['share_with'];
+														$user2 = $share_with1;
 														$amount1=$amount/2;
 														$amount2=$amount/2;
 												}
 												if($split=="them_equally")
 												{
-														$paid_by = $_POST['share_with'];
-														$user1 = $_POST['share_with'];
+														$paid_by = $share_with1;
+														$user1 = $share_with1;
 														$user2 = $user_data->username;
 														$amount1=$amount/2;
 														$amount2=$amount/2;
@@ -82,22 +105,37 @@ $mysqli = new mysqli("localhost", "root", "", "easyroommate");
 												{
 													$paid_by = $user_data->username;
 													$user1 = $user_data->username;
-													$user2 = $_POST['share_with'];
+													$user2 = $share_with1;
 													$amount2=0;
 													$amount1=$amount;
 												}
 												if ($split=="you_owe")
 												{
-													$paid_by = $_POST['share_with'];
-													$user1 = $_POST['share_with'];
+													$paid_by = $share_with1;
+													$user1 = $share_with1;
 													$user2 = $user_data->username;
 													$amount1=0;
 													$amount2=$amount;
 												}
-												echo "expense updated";
-												$settle1 = mysqli_query($mysqli, "UPDATE expense SET exp_name = '$exp_name', amount1 = '$amount1', amount2 = '$amount2', user1='$user1', user2='$user2',total_amount='$amount', paid_by='$paid_by' WHERE exp_id='$exp_id'");
-											}
-										// header('Location: expense_update.php');
+        $settle1 = mysqli_query($mysqli, "UPDATE expense SET exp_name = '$exp_name', amount1 = '$amount1', amount2 = '$amount2', user1='$user1', user2='$user2',total_amount='$amount', paid_by='$paid_by' WHERE id='$exp_id'");
+												if($settle1){
+                                                    $successMessage =  'Expense updated successfully.';
+
+
+        } else {
+            $errorMessage = 'Problem with update.';
+        }
+
+												}
+    else{
+        $errorMessage = 'Please fill the fields.';
+    }
+
+
+}
+
+
+// header('Location: expense_update.php');
 									
 									
 									
@@ -157,29 +195,28 @@ $mysqli = new mysqli("localhost", "root", "", "easyroommate");
             <br></br>
             <div class="container-fluid" style="border:1px solid #cecece;">
                 <br>
-                <form action="" method="post">
-                    <label for="desc">
+                <form action="" method="POST">
+                    <label for="description">
                         Description:
                     </label>
-                    <input type="text" name="description"  required /> <br>
-                    <label for="paid_by">
-                        With you and: </label>
-                       
-                    &nbsp
-                   
-                    <select name='share_with' id='share_with'>
-                        <?php
-                        echo '<option id="user2">'.$user_data->username.'</option>';
-                        foreach ($get_all_friends as $row){
-                            echo '<option>'.$row->username.'</option>';
-                        }?>
-                    </select>
-                    <br>
+                    <?php
+                    echo '<input type="text" name="description"  value="'.$get_expense->exp_name.'"/> <br>
+                    <label for="share_with">
+                        With you and: </label>';
+                    if($get_expense->user2 === $get_expense->paid_by){
+                        echo '<input type="text" name="share_with" value="'.$get_expense->user2.'" disabled/> <br>';
+                    }
+                    elseif($get_expense->user1 === $get_expense->paid_by){
+                        echo '
+                        <input type="text" name="share_with" value="'.$get_expense->user1.'" disabled/> <br>';
+                    }
+
+                   ?>
                     <label for="amount">
                             Amount:
                     </label>
 					
-                    <input type="text" name="amount" required />
+                    <input type="text" name='amount'` required />
 					
                 <br>
 				<label for="split_type">Split Type: </label><br>
@@ -191,12 +228,26 @@ $mysqli = new mysqli("localhost", "root", "", "easyroommate");
 				<label for="they_owe">They owe you completely</label><br>
 				<input type="radio" id="you_owe" name="split" value="you_owe">
 				<label for="you_owe">you owe them completely</label>
-	
-				
-				
+
+
                     <input type="submit" name="submit" value="Update" />
+
                     <br>
                 </form>
+
+            </div>
+
+            <div class="user_box">
+                <?php
+                if(isset($errorMessage)){
+                    echo '<p class="errorMsg">'.$errorMessage.'</p>';
+                    echo '<a href="activity.php" class="btn btn-primary">Go to activity</a>    ';
+                }
+                if(isset($successMessage)){
+                    echo '<p class="successMsg">'.$successMessage.'</p>';
+                    echo '<a href="activity.php" class="btn btn-primary">Go to activity</a>    ';
+                }
+                ?>
             </div>
         </div>
 

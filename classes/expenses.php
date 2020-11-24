@@ -123,7 +123,7 @@ class Expenses
             $sql = "SELECT * FROM expense WHERE id=?";
             $register_stmt = $this->db->prepare($sql);
             $register_stmt->execute([$uId]);
-            if($register_stmt->rowCount() === 0){
+            if($register_stmt->rowCount() === 1){
                 return $register_stmt->fetch(PDO::FETCH_OBJ);
             }
             else{
@@ -131,6 +131,15 @@ class Expenses
             }
         }
         catch (PDOException $errMsg){
+            die($errMsg->getMessage());
+        }
+    }
+
+    function settleExpense($description,$amount,$user){
+        try{
+
+        }
+        catch(PDOException $errMsg){
             die($errMsg->getMessage());
         }
     }

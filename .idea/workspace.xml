@@ -3,21 +3,14 @@
   <component name="ChangeListManager">
     <list default="true" id="c9be299a-1145-48bb-984b-fff530f2defd" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/balance.php" beforeDir="false" afterPath="$PROJECT_DIR$/balance.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/classes/email.php" beforeDir="false" afterPath="$PROJECT_DIR$/classes/email.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/classes/expenses.php" beforeDir="false" afterPath="$PROJECT_DIR$/classes/expenses.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/expense.php" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/expense_added.php" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/friends.php" beforeDir="false" afterPath="$PROJECT_DIR$/friends.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/group_expense_profile.php" beforeDir="false" afterPath="$PROJECT_DIR$/group_expense_profile.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/group_expense_settle.php" beforeDir="false" afterPath="$PROJECT_DIR$/group_expense_settle.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/group_expense_update.php" beforeDir="false" afterPath="$PROJECT_DIR$/group_expense_update.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/groups_create.php" beforeDir="false" afterPath="$PROJECT_DIR$/groups_create.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/groups_expense.php" beforeDir="false" afterPath="$PROJECT_DIR$/groups_expense.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/image_upload.php" beforeDir="false" afterPath="$PROJECT_DIR$/image_upload.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/notifications.php" beforeDir="false" afterPath="$PROJECT_DIR$/notifications.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/expense_profile.php" beforeDir="false" afterPath="$PROJECT_DIR$/expense_profile.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/expense_update.php" beforeDir="false" afterPath="$PROJECT_DIR$/expense_update.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/profile.php" beforeDir="false" afterPath="$PROJECT_DIR$/profile.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/profile_copy" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/test.php" beforeDir="false" afterPath="$PROJECT_DIR$/test.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/profile1.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/signup.php" beforeDir="false" afterPath="$PROJECT_DIR$/signup.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/user_profile.php" beforeDir="false" afterPath="$PROJECT_DIR$/user_profile.php" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -108,7 +101,8 @@
       <workItem from="1606053385241" duration="3924000" />
       <workItem from="1606101120055" duration="16429000" />
       <workItem from="1606132933290" duration="4540000" />
-      <workItem from="1606148214021" duration="2463000" />
+      <workItem from="1606148214021" duration="2506000" />
+      <workItem from="1606178454805" duration="10853000" />
     </task>
     <servers />
   </component>
@@ -120,14 +114,14 @@
       <screen x="0" y="0" width="1536" height="824" />
     </state>
     <state x="499" y="159" key="#com.intellij.refactoring.safeDelete.UnsafeUsagesDialog/0.0.1536.824@0.0.1536.824" timestamp="1604357340938" />
-    <state x="988" y="339" key="NewPhpFileDialog" timestamp="1606149605882">
+    <state x="988" y="339" key="NewPhpFileDialog" timestamp="1606185448000">
       <screen x="0" y="0" width="1536" height="824" />
     </state>
-    <state x="988" y="339" key="NewPhpFileDialog/0.0.1536.824@0.0.1536.824" timestamp="1606149605882" />
-    <state x="401" y="257" key="com.intellij.ide.util.TipDialog" timestamp="1606148213979">
+    <state x="988" y="339" key="NewPhpFileDialog/0.0.1536.824@0.0.1536.824" timestamp="1606185448000" />
+    <state x="401" y="257" key="com.intellij.ide.util.TipDialog" timestamp="1606178622447">
       <screen x="0" y="0" width="1536" height="824" />
     </state>
-    <state x="401" y="257" key="com.intellij.ide.util.TipDialog/0.0.1536.824@0.0.1536.824" timestamp="1606148213979" />
+    <state x="401" y="257" key="com.intellij.ide.util.TipDialog/0.0.1536.824@0.0.1536.824" timestamp="1606178622447" />
     <state x="425" y="187" key="run.anything.popup" timestamp="1604729884063">
       <screen x="0" y="0" width="1536" height="824" />
     </state>

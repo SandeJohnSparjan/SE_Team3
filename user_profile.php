@@ -15,6 +15,13 @@ if(isset($_SESSION['user_id']) && isset($_SESSION['email'])){
             }
         }
     }
+
+    if(isset($_POST['remind'])){
+        $result = $email_obj->sendRemindEmail($user_data->user_email,$_SESSION['email']);
+    }
+
+
+
 }
 else{
     header('Location: logout.php');
@@ -64,7 +71,20 @@ $get_frnd_num = $friend_obj->get_all_friends($_SESSION['user_id'], false);
             <div class="actions">
                 <?php
                 if($is_already_friends){
-                    echo '<a href="functions.php?action=unfriend_req&id='.$user_data->id.'" class="req_actionBtn unfriend">Unfriend</a>';
+                    echo '<a href="functions.php?action=unfriend_req&id='.$user_data->id.'" class="req_actionBtn unfriend">Unfriend</a>
+                           
+                          <form action="" method="POST">
+                          <label for="remind"><h4>Send a friendly reminder</h4></label>
+                          <input type="submit" name="remind" class="req_actionBtn unfriend" value="Remind"></input>
+                          </form>';
+                    echo '<div>';
+    if(isset($result['errorMessage'])){
+        echo '<p class="errorMsg">'.$result['errorMessage'].'</p>';
+    }
+    if(isset($result['successMessage'])){
+        echo '<p class="successMsg">'.$result['successMessage'].'</p>';
+    }
+    echo '</div>';
                 }
                 elseif ($check_req_sender){
                     echo '<a href="functions.php?action=cancel_req&id='.$user_data->id.'" class="req_actionBtn cancelRequest">Cancel Request</a>';
