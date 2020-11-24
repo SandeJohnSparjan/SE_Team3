@@ -48,11 +48,11 @@ if(isset($_SESSION['email']) ){
     </form>
     <div>
         <?php
-        if(isset($email_result['errorMessage'])){
-            echo '<p class="errorMsg">'.$email_result['errorMessage'].'</p>';
+        if(isset($result['errorMessage'])){
+            echo '<p class="errorMsg">'.$result['errorMessage'].'</p>';
         }
-        if(isset($email_result['successMessage'])){
-            echo '<p class="successMsg">'.$email_result['successMessage'].'</p>';
+        if(isset($result['successMessage'])){
+            echo '<p class="successMsg">'.$result['successMessage'].'</p>';
         }
         ?>
     </div>

@@ -25,7 +25,8 @@ class User{
 
                     if ($check_email->rowCount() > 0) {
                         return ['errorMessage' => 'This email address is already registered!! Try another one!'];
-                    } else {
+                    }
+                    else {
 
                         $user_image = 'rand3';
 

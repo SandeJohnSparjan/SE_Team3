@@ -22,12 +22,27 @@ else{
 //expense button
 if(isset($_POST['submit'])) {
     if (isset($_POST['description'])  && isset($_POST['share_with']) && isset($_POST['amount']) && isset($_POST['split'])) {
+        foreach ($all_users as $row){
+            if($row->username === $_POST['share_with']){
+                $share_email = $row->user_email;
+            }
+        }
+
         $result = $expenses_obj->insertExpense($_POST['description'], $user_data->username, $_POST['share_with'], $_POST['amount'], $_POST['split']);
+
+        //sending mail if expense is added
+        if($result['successMessage']){
+            $sendMail = $email_obj->sendExpenseAddedMail($share_email, $user_data->username);
+        }
+
 
     } else {
         $result['errorMessage'] = 'Fields are filled.';
     }
+
+
 }
+
 
 
 
@@ -146,7 +161,7 @@ $get_all_friends = $friend_obj->get_all_friends($_SESSION['user_id'], true);
 
 
                                     </table>
-                                    <input type="submit" name="submit" value="Submit" />
+                                    <input type="submit" name="submit" value="Add an Expense" />
 
                                 </div>
                             </form>
@@ -158,6 +173,16 @@ $get_all_friends = $friend_obj->get_all_friends($_SESSION['user_id'], true);
                                 }
                                 if(isset($result['successMessage'])){
                                     echo '<p class="successMsg">'.$result['successMessage'].'</p>';
+                                }
+                                ?>
+                            </div>
+                            <div>
+                                <?php
+                                if(isset($sendMail['emailErrorMessage'])){
+                                    echo '<p class="errorMsg">'.$sendMail['emailErrorMessage'].'</p>';
+                                }
+                                if(isset($sendMail['emailSuccessMessage'])){
+                                    echo '<p class="successMsg">'.$sendMail['emailSuccessMessage'].'</p>';
                                 }
                                 ?>
                             </div>

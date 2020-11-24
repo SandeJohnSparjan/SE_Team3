@@ -30,6 +30,16 @@ elseif($get_expense->user1 === $get_expense->paid_by){
     $share_with1 = $get_expense->user1;
 }
 
+//getting share with person email
+foreach ($all_users as $row){
+    if($row->username === $share_with1){
+        $share_email = $row->user_email;
+    }
+    else{
+        $share_email = $user_data->user_email;
+    }
+}
+
 //requesting notification number
 $get_req_num = $friend_obj->req_notification($_SESSION['user_id'], false);
 //total friends
@@ -79,6 +89,7 @@ if(isset($_POST['submit'])) {
 //    }
     if (isset($_POST['description'])  && isset($_POST['amount']) && isset($_POST['split'])) {
 
+
 												$exp_id= $_GET['id'];
 										        $result = mysqli_query($mysqli, "SELECT * FROM expense WHERE id='$exp_id'");
 											
@@ -117,15 +128,14 @@ if(isset($_POST['submit'])) {
 													$amount1=0;
 													$amount2=$amount;
 												}
-        $settle1 = mysqli_query($mysqli, "UPDATE expense SET exp_name = '$exp_name', amount1 = '$amount1', amount2 = '$amount2', user1='$user1', user2='$user2',total_amount='$amount', paid_by='$paid_by' WHERE id='$exp_id'");
+                                                $settle1 = mysqli_query($mysqli, "UPDATE expense SET exp_name = '$exp_name', amount1 = '$amount1', amount2 = '$amount2', user1='$user1', user2='$user2',total_amount='$amount', paid_by='$paid_by' WHERE id='$exp_id'");
 												if($settle1){
                                                     $successMessage =  'Expense updated successfully.';
 
 
-        } else {
-            $errorMessage = 'Problem with update.';
-        }
-
+                                                } else {
+                                                $errorMessage = 'Problem with update.';
+												}
 												}
     else{
         $errorMessage = 'Please fill the fields.';
@@ -220,7 +230,7 @@ if(isset($_POST['submit'])) {
                             Amount:
                     </label>
 					
-                    <input type="text" name='amount'` required />
+                    <input type="text" name='amount' required />
 					
                 <br>
 				<label for="split_type">Split Type: </label><br>
@@ -248,11 +258,15 @@ if(isset($_POST['submit'])) {
                     echo '<a href="activity.php" class="btn btn-primary">Go to activity</a>    ';
                 }
                 if(isset($successMessage)){
+                    $sendUpdateMail = $email_obj->sendExpenseUpdatedMail($share_email,$user_data->username);
                     echo '<p class="successMsg">'.$successMessage.'</p>';
+                    echo '<p class="successMsg">'.$sendUpdateMail['emailSuccessMessage'].'</p>';
                     echo '<a href="activity.php" class="btn btn-primary">Go to activity</a>    ';
                 }
                 ?>
             </div>
+
+
         </div>
 
 

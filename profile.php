@@ -161,6 +161,13 @@ $get_frnd_num = $friend_obj->get_all_friends($_SESSION['user_id'], false);
 										//echo $user2;
 										$settle1 = mysqli_query($mysqli, "DELETE FROM expense WHERE user1='$user2' and user2='$username' ");
 										$settle2 = mysqli_query($mysqli, "DELETE FROM expense WHERE user1='$username' and user2='$user2'");
+
+
+//										if($settle1 && $settle2)
+//                                        {
+//                                            $sendSettleMail = $email_obj->sendSettleMail()
+//                                        }
+
 										//echo "<script> alert('You are succesfully settled up'); </script>";
 										 header('Location: profile.php');
 									}
