@@ -3,13 +3,23 @@
   <component name="ChangeListManager">
     <list default="true" id="c9be299a-1145-48bb-984b-fff530f2defd" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/classes/email.php" beforeDir="false" afterPath="$PROJECT_DIR$/classes/email.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/classes/expenses.php" beforeDir="false" afterPath="$PROJECT_DIR$/classes/expenses.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/activity.php" beforeDir="false" afterPath="$PROJECT_DIR$/activity.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/balance.php" beforeDir="false" afterPath="$PROJECT_DIR$/balance.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/expense.php" beforeDir="false" afterPath="$PROJECT_DIR$/expense.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/expense_profile.php" beforeDir="false" afterPath="$PROJECT_DIR$/expense_profile.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/expense_update.php" beforeDir="false" afterPath="$PROJECT_DIR$/expense_update.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/friends.php" beforeDir="false" afterPath="$PROJECT_DIR$/friends.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/group_expense_profile.php" beforeDir="false" afterPath="$PROJECT_DIR$/group_expense_profile.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/group_expense_settle.php" beforeDir="false" afterPath="$PROJECT_DIR$/group_expense_settle.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/group_expense_update.php" beforeDir="false" afterPath="$PROJECT_DIR$/group_expense_update.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/groups_create.php" beforeDir="false" afterPath="$PROJECT_DIR$/groups_create.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/groups_expense.php" beforeDir="false" afterPath="$PROJECT_DIR$/groups_expense.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/image_upload.php" beforeDir="false" afterPath="$PROJECT_DIR$/image_upload.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/index.php" beforeDir="false" afterPath="$PROJECT_DIR$/index.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/notifications.php" beforeDir="false" afterPath="$PROJECT_DIR$/notifications.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/profile.php" beforeDir="false" afterPath="$PROJECT_DIR$/profile.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/profile1.php" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/signup.php" beforeDir="false" afterPath="$PROJECT_DIR$/signup.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/style.css" beforeDir="false" afterPath="$PROJECT_DIR$/style.css" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/user_profile.php" beforeDir="false" afterPath="$PROJECT_DIR$/user_profile.php" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -102,7 +112,7 @@
       <workItem from="1606101120055" duration="16429000" />
       <workItem from="1606132933290" duration="4540000" />
       <workItem from="1606148214021" duration="2506000" />
-      <workItem from="1606178454805" duration="10853000" />
+      <workItem from="1606178454805" duration="12883000" />
     </task>
     <servers />
   </component>

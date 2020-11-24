@@ -88,12 +88,17 @@ $get_frnd_num = $friend_obj->get_all_friends($_SESSION['user_id'], false);
 <body>
 <div class="profile_container">
     <div class="inner_profile">
-        <div class="img">
+        <img src="logo.jpeg" alt="Eazy Roommate" align="left" width="120" height="120">
+        <div class="img" align="center" style="margin-left: 45%;">
+
+
             <img src="profile_images/<?php echo $user_data->user_image;?>" alt="Profile image">
         </div>
-        <h1><?php echo $user_data->username;?></h1>
-        <h1>Group Name: <u><?php echo $group_name->group_name;?></u></h1>
+        <h1 style="margin-right: 13%;"><?php echo $user_data->username;?></h1>
+        <h1 style="margin-right: 13%;">Group Name: <u><?php echo $group_name->group_name;?></u></h1>
+
     </div>
+
 
 
     <nav>
@@ -101,7 +106,7 @@ $get_frnd_num = $friend_obj->get_all_friends($_SESSION['user_id'], false);
             <li><a href="profile.php" rel="noopener noreferrer" class="active">Home</a></li>
 
             <li><a href="expense.php" rel="noopener noreferrer">Add an Expense</a></li>
-            <li><a href="balance.php" rel="noopener noreferrer">Balance</a></li>
+            <li><a href="activity.php" rel="noopener noreferrer">Activity</a></li>
             <li><a href="groups_create.php" rel="noopener noreferrer">Groups</a></li>
 
             <button class="btn dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">

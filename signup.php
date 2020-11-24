@@ -25,7 +25,14 @@ if(isset($_SESSION['email']) ){
     <link href="https://fonts.googleapis.com/css?family=Open+Sans:400,700" rel="stylesheet">
 </head>
 <body>
+<div class="profile_container">
+<div class="inner_profile">
+    <img src="logo.jpeg" alt="Eazy Roommate" align="left" width="120" height="120">
+</div>
 <div class="main_container login_signup_container">
+
+
+
     <h1>Sign Up</h1>
     <form action="" method="POST" novalidate>
         <label for="username">Full Name</label>
@@ -49,6 +56,7 @@ if(isset($_SESSION['email']) ){
         }
         ?>
     </div>
+</div>
 </div>
 </body>
 </html>

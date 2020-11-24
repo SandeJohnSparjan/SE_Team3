@@ -48,11 +48,16 @@ $get_frnd_num = $friend_obj->get_all_friends($_SESSION['user_id'], false);
 <body>
 <div class="profile_container">
     <div class="inner_profile">
-        <div class="img">
+        <img src="logo.jpeg" alt="Eazy Roommate" align="left" width="120" height="120">
+        <div class="img" align="center" style="margin-left: 45%;">
+
+
             <img src="profile_images/<?php echo $user_data->user_image;?>" alt="Profile image">
         </div>
-        <h1><?php echo $user_data->username;?></h1>
+        <h1 style="margin-right: 13%;"><?php echo $user_data->username;?></h1>
     </div>
+
+
     <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
 
 

@@ -189,6 +189,7 @@ h1{
 }
 
 .inner_profile .img{
+
     overflow: hidden;
     width: 100px;
     height: 100px;
@@ -200,6 +201,7 @@ h1{
     margin: 0 auto;
 }
 .inner_profile .img img{
+
     max-height: 100%;
     width: auto;
 }
