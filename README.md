@@ -11,6 +11,6 @@ Members of the group:   John Sparjan Sande
 Download the submitted zipfile
 Extract it and add the folder in Xampp->htdocs
 Import the sql file into Phpmyadmin
-Run the php file localhost/finalproject
+Run the php file localhost/SE
 
 
